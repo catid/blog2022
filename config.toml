@@ -2,7 +2,7 @@ baseURL = "/"
 languageCode = "en-us"
 theme = "terminal"
 title = "Catid's Hacks"
-paginate = 5
+paginate = 15
 
 [params]
   # dir name of your main content (default is `content/posts`).
