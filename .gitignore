@@ -104,4 +104,4 @@ dist
 .tern-port
 
 .hugo_build.lock
-
+public/
