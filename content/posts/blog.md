@@ -1,6 +1,6 @@
 +++
 title = "How the Blog Sausage is Made"
-date = "2020-12-31"
+date = "2022-05-09"
 cover = "posts/blog/cover.jpg"
 description = "Time for a new blog site!"
 +++
@@ -23,4 +23,6 @@ The site itself is based on this Hugo theme: https://github.com/panr/hugo-theme-
 
 Cloudflare Pages manages my DNS hostname, SSL certificates, CDN hosting, and the worker that rebuilds the site whenever I push to github.
 
-Since Hugo is significantly faster than Gatsby, it takes about 15 seconds for Github changes to make it to the website.
+Since Hugo is significantly faster than Gatsby, and Pages is significantly faster than Amplify: It takes about 30 seconds for Github changes to make it to the website.
+
+And finally, the content is mirrored world-wide and not just locally in the US.

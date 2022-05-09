@@ -1,12 +1,9 @@
----
-title: Magic Box of Transmutation
-path: "/magic_box"
-featuredImage: "./cad_preview.jpg"
-tags: ["3D Printing", "Magic"]
-excerpt: There's a box for that.
-created: 2021-01-23
-updated: 2021-01-23
----
++++
+title = "Magic Box of Transmutation"
+date = "2021-01-23"
+cover = "posts/magic_box/cad_preview.jpg"
+description = "There's a box for that."
++++
 
 ## Magic Box of Transmutation
 

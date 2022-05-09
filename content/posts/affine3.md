@@ -1,6 +1,6 @@
 +++
 title = "3 Point Parameterization of Affine Transform"
-date = "2021-5-31"
+date = "2021-05-31"
 cover = "posts/affine3/affine.png"
 description = "A Fine Transformation"
 +++

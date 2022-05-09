@@ -1,12 +1,8 @@
----
-title: "How the Sausage is Made"
-path: "/tools"
-tags: ["Blog"]
-featuredImage: ""
-excerpt: Tools for better electronic life
-created: 2021-07-12
-updated: 2021-07-12
----
++++
+title = "Tools"
+date = "2021-07-12"
+description = "Tools for better electronic life"
++++
 
 ## Web:
 

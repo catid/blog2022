@@ -1,12 +1,9 @@
----
-title: It's about time
-path: "/time"
-featuredImage: "./big_bang.jpg"
-tags: ["Random"]
-excerpt: Now let's get into some WILD SPECULATION.
-created: 2021-05-11
-updated: 2021-05-11
----
++++
+title = "It's about time"
+date = "2021-05-11"
+cover = "posts/time/big_bang.jpg"
+description = "Now let's get into some WILD SPECULATION!"
++++
 
 ## Enter the Time Cube
 
