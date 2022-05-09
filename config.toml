@@ -65,17 +65,17 @@ paginate = 15
   [languages.en]
     languageName = "English"
     title = "Catid's Hacks"
-    subtitle = "A simple, retro theme for Hugo"
+    subtitle = "Better than kinky sex with models"
     owner = "catid"
     keywords = ""
     copyright = ""
     menuMore = ":: Pinned"
     readMore = ":: Read"
-    readOtherPosts = "Read other posts"
-    newerPosts = "Newer posts"
-    olderPosts = "Older posts"
-    missingContentMessage = "Page not found..."
-    missingBackButtonLabel = "Back to home page"
+    readOtherPosts = ":: Other posts"
+    newerPosts = ":: Newer posts"
+    olderPosts = ":: Older posts"
+    missingContentMessage = ":: Page not found..."
+    missingBackButtonLabel = ":: Return"
 
     [languages.en.params.logo]
       logoText = "Catid's Hacks"
