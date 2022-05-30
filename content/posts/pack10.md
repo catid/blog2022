@@ -113,7 +113,7 @@ The second step is to double the height of the output image.  We will store the 
 
 This means that some of the bits of each pixel are repeated, but this is intentional!  The idea is that the low bits are useless if we lose any of the high bits.  By packing  an extra 4 bits at the bottom of the high bits we are adding a large +/- 16 buffer for error in the video encode, and in practice at high quality encodes this is sufficient.  Especially considering that the high bits of the pixel tend to change much slower across the image.
 
-The final step is to fold the low bits to avoid sharp transitions due to the truncation.  For example, if the input data goes: 254, 255, 0, 1, 2... This will compress poorly with a video encoder because these sharp transitions spread energy across the whole DCT/DST and get quantized heavily leading to ringing artifacts around these edges.  So to greatly improve the quality, we fold these so that the above sequence becomes: 254, 255, 255, 254, 253...
+The final step is to fold the low bits to avoid sharp transitions due to the truncation.  For example, if the input data goes: 1022, 1023, 0, 1, 2... This will compress poorly with a video encoder because these sharp transitions spread energy across the whole DCT/DST and get quantized heavily leading to ringing artifacts around these edges.  So to greatly improve the quality, we fold these so that the above sequence becomes: 1022, 1023, 1023, 1022, 1021...  This step cuts the average pixel error about in half and is very important.
 
 The folding process in pseudo-code is simply:
 
@@ -125,10 +125,16 @@ The folding process in pseudo-code is simply:
 
 And that's it!  Now you have a double-height image that can be encoded with H.265 MAIN10 profile.  The reverse operation is performed after the video is decoded to retrieve the full 16-bit pixel values.
 
+Importantly, we ignore the low 4 bits of the upper half of the image, and instead copy those bits from the high 4 bits of the lower half of the image since they are less likely to be corrupted there by the video encoder.
+
 
 ## Results:
 
-I cannot share the Anduril Industry test set of IR imagery that we used for evaluating the pack10 software, but I can share the results.  In practice, 2.1GB of 16-bit PNG images are compressed to a single 60 MB video file using x265, at quality sufficient to be used for machine learning training.  A 35x compression ratio is pretty good, and can be improved further using a hardware encoder.  The images are visually similar to the raws, differing mainly due to the smoothing process that eliminates a lot of sensor artifacts we do not care about anyhow.
+I cannot share the Anduril Industry test set of IR imagery that we used for evaluating the pack10 software, but I can share the results.
+
+In practice, 2.1GB of 16-bit PNG images are compressed to a single 60 MB video file using x265, at quality sufficient to be used for machine learning training.  A 35x compression ratio is pretty good, and can be improved further using a hardware encoder.
+
+The images are visually similar to the raws, differing mainly due to the smoothing process that eliminates a lot of sensor artifacts we do not care about anyhow.
 
 
 ## Fast Implementation:
