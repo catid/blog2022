@@ -109,6 +109,8 @@ Pack10 accepts a monochrome 16-bit raster image, and produces a 10-bit image tha
 
 The first step is to find the smallest value in the image, and then subtract all pixel values by this smallest value.  This eliminates as much energy as possible from the image before we start, without applying any rescaling that can cause problems for the encoder.
 
+Note that we must store this value along-side the video as metadata, so that it can used by the decoder.  In a later section I share how to do this using H.265 SEI prefixes.
+
 The second step is to double the height of the output image.  We will store the high 10 bits of the 16-bit input in the top half, and the low 10 bits in the bottom half.
 
 This means that some of the bits of each pixel are repeated, but this is intentional!  The idea is that the low bits are useless if we lose any of the high bits.  By packing  an extra 4 bits at the bottom of the high bits we are adding a large +/- 16 buffer for error in the video encode, and in practice at high quality encodes this is sufficient.  Especially considering that the high bits of the pixel tend to change much slower across the image.
