@@ -25,7 +25,7 @@ I noticed that video encoders perform much worse on data that has larger steps b
 
 I considered using a histogram compression approach to try to preserve the pixel values for data, using Global Histogram Equalization (GHE).  However, the encoder is fundamentally lossy, and this approach would lead to larger errors for small errors in the encode.
 
-I considered also using some of the UV channels of the image to encode data, however these are at quarter scale so there are not enough UV pixels to store information for each of the Y channel pixels.
+I considered also using some of the UV channels of the image to encode data, however these are at quarter scale so there are not enough UV pixels to store information for each of the Y channel pixels.  Also it is not well known that video encoders store the UV channels with lower quality than the Y channel.
 
 This led to the algorithm that finally worked well.
 
