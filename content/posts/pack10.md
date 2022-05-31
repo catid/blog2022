@@ -120,7 +120,7 @@ The final step is to fold the low bits to avoid sharp transitions due to the tru
 The folding process in pseudo-code is simply:
 
 ```
-    if ((high_pixel_value & 1) == 1) {
+    if ((original_pixel_value & (1 << 10)) != 0) {
         low_pixel_value = 0x3ff - low_pixel_value;
     }
 ```
