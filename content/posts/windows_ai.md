@@ -48,6 +48,8 @@ From Anaconda, Launch the Jupyter Notebook app, and then navigate to the noteboo
 
 You can then run through each step in order, and they should all complete successfully since we installed the prerequisites.
 
+You should probably skip the google colab step, since the package does not build properly on Windows and because our goal is to run locally not on google colab.  Note that Google is actively banning people trying to do this right now.
+
 On my limited desktop GPU, I need to use fp16 precision and can only generate two images at a time.
 
 If I try to generate too many, the Python script fails and leaves the kernel in a bad state where it cannot generate anymore.  To fix it, go to the Kernel menu and select Restart, and then run through again starting from `import torch` script.
