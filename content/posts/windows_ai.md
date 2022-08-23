@@ -52,28 +52,61 @@ On my limited desktop GPU, I need to use fp16 precision and can only generate tw
 
 If I try to generate too many, the Python script fails and leaves the kernel in a bad state where it cannot generate anymore.  To fix it, go to the Kernel menu and select Restart, and then run through again starting from `import torch` script.
 
-# Bulk generation:
+# Quick notebook scripts:
 
-To generate 100 random images automatically:
+```
+from huggingface_hub import notebook_login
+
+notebook_login()
+```
+
+```
+import torch
+from diffusers import StableDiffusionPipeline
+
+# make sure you're logged in with `huggingface-cli login`
+pipe = StableDiffusionPipeline.from_pretrained("CompVis/stable-diffusion-v1-4", revision="fp16", torch_dtype=torch.float16, use_auth_token=True)  
+
+pipe = pipe.to("cuda")
+
+# Work-around a bug: Run it once to reduce memory usage.  This allows us to batch 2 at a time later for some reason.
+
+from torch import autocast
+
+prompt = "victory for humans"
+with autocast("cuda"):
+    images = pipe(prompt)["sample"]
+```
+
+Script to generate a bunch of images in a way that you can preview at lower quality and then re-run your favorites at higher quality:
 
 ```
 from PIL import Image
 from torch import autocast
 import os
 
-text_prompt = "blackhole eating a bagel"
+text_prompt = "anthropomorphic wolf in a trenchcoat"
+steps=50 # Start with fewer steps (lower detail) and increase if you like an image to improve quality
+# Steps 75 and 100 are both noticeably better jumps in quality
+width=512
+height=512
+seed=18736684 # Starting seed, increased by 1 for each image generated so you can generate each image again
+n=50 # Number of image pairs to generate
 
 num_images = 2
 prompt = [text_prompt] * num_images
 
 os.mkdir(text_prompt)
 
-for x in range(1, 50):
+for x in range(0, n-1):
+    seed = 18736684 + x
+    generator = torch.Generator("cuda").manual_seed(seed)
+
     with autocast("cuda"):
-      images = pipe(prompt)["sample"]
+      images = pipe(prompt, num_inference_steps=steps, height=height, width=width, generator=generator)["sample"]
 
     for i, img in enumerate(images):
-        img.save("{}/{}_{}.png".format(text_prompt, x, i))
+        img.save("{}/{}_{}.png".format(text_prompt, seed, i))
 ```
 
 "blackhole eating a bagel" ![blackhole eating a bagel](blackhole_bagel.png)
