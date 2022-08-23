@@ -68,7 +68,7 @@ for x in range(1, 50):
       images = pipe(prompt)["sample"]
 
     for i, img in enumerate(images):
-        img.save("generated/{}_{}.png".format(x, i))
+        img.save("{}_{}.png".format(x, i))
 ```
 
 "blackhole eating a bagel" ![blackhole eating a bagel](blackhole_bagel.png)
