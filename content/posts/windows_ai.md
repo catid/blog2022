@@ -59,16 +59,21 @@ To generate 100 random images automatically:
 ```
 from PIL import Image
 from torch import autocast
+import os
+
+text_prompt = "flaming chandelier"
 
 num_images = 2
-prompt = ["blackhole eating a bagel"] * num_images
+prompt = [text_prompt] * num_images
+
+os.mkdir(text_prompt)
 
 for x in range(1, 50):
     with autocast("cuda"):
       images = pipe(prompt)["sample"]
 
     for i, img in enumerate(images):
-        img.save("{}_{}.png".format(x, i))
+        img.save("{}/{}_{}.png".format(text_prompt, x, i))
 ```
 
 "blackhole eating a bagel" ![blackhole eating a bagel](blackhole_bagel.png)
