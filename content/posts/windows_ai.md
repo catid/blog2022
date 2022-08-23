@@ -91,7 +91,7 @@ from PIL import Image
 from torch import autocast
 import os
 
-text_prompt = "wolf at the door"
+text_prompt = "blackhole eating a bagel"
 steps=50 # Start with fewer steps (lower detail) and increase if you like an image to improve quality
 # Steps 75 and 100 are both noticeably better jumps in quality
 width=512
