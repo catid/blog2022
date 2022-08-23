@@ -60,17 +60,23 @@ On my limited desktop GPU, I need to use fp16 precision and can only generate tw
 
 If I try to generate too many, the Python script fails and leaves the kernel in a bad state where it cannot generate anymore.  To fix it, go to the Kernel menu and select Restart, and then run through again starting from `import torch` script.
 
-# Example:
+# Bulk generation:
+
+To generate 100 random images automatically:
 
 ```
+from PIL import Image
+from torch import autocast
+
 num_images = 2
 prompt = ["blackhole eating a bagel"] * num_images
 
-with autocast("cuda"):
-  images = pipe(prompt)["sample"]
+for x in range(1, 50):
+    with autocast("cuda"):
+      images = pipe(prompt)["sample"]
 
-grid = image_grid(images, rows=1, cols=2)
-grid
+    for i, img in enumerate(images):
+        img.save("generated/{}_{}.png".format(x, i))
 ```
 
 "blackhole eating a bagel" ![blackhole eating a bagel](blackhole_bagel.png)
