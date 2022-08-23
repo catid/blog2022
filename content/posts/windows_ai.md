@@ -12,7 +12,7 @@ These were generated on my Windows 11 PC with a GeForce RTX 2080 card in just 20
 "a photograph of an astronaut riding a horse" ![a photograph of an astronaut riding a horse](astronaut_rides_horse.png)
 
 
-## Pre-requisites
+## Prerequisites
 
 First we need to install the latest drivers and Python environment.
 
@@ -54,7 +54,7 @@ Save it to your Documents folder.
 
 From Anaconda, Launch the Jupyter Notebook app, and then navigate to the notebook file.
 
-You can then run through each step in order, and they should all complete successfully since we installed the pre-requisites.
+You can then run through each step in order, and they should all complete successfully since we installed the prerequisites.
 
 On my limited desktop GPU, I need to use fp16 precision and can only generate two images at a time.
 
