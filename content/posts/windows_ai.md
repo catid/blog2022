@@ -61,7 +61,7 @@ from PIL import Image
 from torch import autocast
 import os
 
-text_prompt = "flaming chandelier"
+text_prompt = "blackhole eating a bagel"
 
 num_images = 2
 prompt = [text_prompt] * num_images
