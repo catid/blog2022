@@ -7,7 +7,7 @@ description = "How to generate AI artwork on your Windows Nvidia gaming PC"
 
 ## Motivation
 
-These were generated on my Windows 11 PC with a GeForce RTX 2080 card in just a 20 seconds:
+These were generated on my Windows 11 PC with a GeForce RTX 2080 card in just 20 seconds:
 
 "a photograph of an astronaut riding a horse" ![a photograph of an astronaut riding a horse](astronaut_rides_horse.png)
 
