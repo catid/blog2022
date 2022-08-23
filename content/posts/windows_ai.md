@@ -89,12 +89,12 @@ from PIL import Image
 from torch import autocast
 import os
 
-text_prompt = "anthropomorphic wolf in a trenchcoat"
+text_prompt = "wolf at the door"
 steps=50 # Start with fewer steps (lower detail) and increase if you like an image to improve quality
 # Steps 75 and 100 are both noticeably better jumps in quality
 width=512
 height=512
-seed=18736684 # Starting seed, increased by 1 for each image generated so you can generate each image again
+seed0=18736684 # Starting seed, increased by 1 for each image generated so you can generate each image again
 n=50 # Number of image pairs to generate
 
 num_images = 2
@@ -103,7 +103,7 @@ prompt = [text_prompt] * num_images
 os.mkdir(text_prompt)
 
 for x in range(0, n-1):
-    seed = 18736684 + x
+    seed = seed0 + x
     generator = torch.Generator("cuda").manual_seed(seed)
 
     with autocast("cuda"):
