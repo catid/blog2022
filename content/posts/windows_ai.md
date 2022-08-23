@@ -54,11 +54,15 @@ If I try to generate too many, the Python script fails and leaves the kernel in 
 
 # Quick notebook scripts:
 
+Login script (run once every week or so):
+
 ```
 from huggingface_hub import notebook_login
 
 notebook_login()
 ```
+
+Setup script (run once per session):
 
 ```
 import torch
