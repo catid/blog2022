@@ -54,6 +54,7 @@ On my limited desktop GPU, I need to use fp16 precision and can only generate tw
 
 If I try to generate too many, the Python script fails and leaves the kernel in a bad state where it cannot generate anymore.  To fix it, go to the Kernel menu and select Restart, and then run through again starting from `import torch` script.
 
+
 # Practical usage:
 
 A good workflow appears to be to generate a large number of images at lower quality, and then hand-pick a few of them to render at higher quality.
