@@ -16,7 +16,7 @@ These were generated on my Windows 11 PC with a GeForce RTX 2080 card in just 20
 
 First we need to install the latest drivers and Python environment.
 
-Download and install the latest Nvidia driver here: https://www.nvidia.com/download
+Download and install the latest Nvidia driver here: https://www.nvidia.com/download/index.aspx
 
 Download and install the latest Nvidia CUDA driver here: https://developer.nvidia.com/cuda-downloads
 
