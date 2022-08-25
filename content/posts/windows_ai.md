@@ -119,3 +119,10 @@ for x in range(0, n-1):
 ```
 
 "blackhole eating a bagel" ![blackhole eating a bagel](blackhole_bagel.png)
+
+
+# Upsampling
+
+The generated images are limited to about 512x512 pixels.  To produce HD artwork for wallpaper or prints, we need to upsample.
+
+Gigapixel AI has some good paid options for this.  There's also a free recent model that removes noise/post-processing effects and sharpens the image here: https://github.com/xinntao/Real-ESRGAN  They provide a pre-built Windows CLI tool.  It may not be suitable for some types of images since it cannot be configured to retain an intentional film grain look.
