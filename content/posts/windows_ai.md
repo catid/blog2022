@@ -126,3 +126,19 @@ for x in range(0, n-1):
 The generated images are limited to about 512x512 pixels.  To produce HD artwork for wallpaper or prints, we need to upsample.
 
 Gigapixel AI has some good paid options for this.  There's also a free recent model that removes noise/post-processing effects and sharpens the image here: https://github.com/xinntao/Real-ESRGAN  They provide a pre-built Windows CLI tool.  It may not be suitable for some types of images since it cannot be configured to retain an intentional film grain look.
+
+
+# Advanced usage
+
+To get even better results, the diffuser readme suggests to build your own pipeline rather than using the defaults.  Switching to `k-lms` seems to be a huge win for both quality and processing time, because you get better results in fewer steps.
+
+Increasing the cfg scale parameter above 8 will make the output stay closer to the prompt but reduce the diversity of results.  Keeping it around 7.5 seems fine if you're going to generate a lot of images to explore the latent space.
+
+There's a good Twitter thread on how to start with an image as a template sketch, and add details from there: https://twitter.com/krea_ai/status/1562463398826504203?s=20&t=bxBwzWJ-ZSljCqlNG83eUA
+
+
+# Community resources
+
+https://www.reddit.com/r/StableDiffusion/
+
+https://discord.gg/stablediffusion
