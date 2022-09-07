@@ -142,3 +142,5 @@ There's a good Twitter thread on how to start with an image as a template sketch
 https://www.reddit.com/r/StableDiffusion/
 
 https://discord.gg/stablediffusion
+
+Prompt style guide: https://imgur.com/a/2Fi9q5G
