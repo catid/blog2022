@@ -171,11 +171,11 @@ sudo apt install libcudnn8-dev
 
 This seems to put the cudnn library headers/files under /usr, so we have to specify that in the next step.
 
-## Build and install JAX
+## Build and install jaxlib
 
 These steps are from https://jax.readthedocs.io/en/latest/developer.html#building-from-source
 
-Build JAX:
+Build jaxlib:
 
 ```
 git clone https://github.com/google/jax
@@ -188,12 +188,14 @@ python build/build.py --enable_cuda --cuda_path /usr/local/cuda-11.8 --cudnn_pat
 The build takes about 30 minutes on a modern processor.  Finally, time to install!
 
 ```
+pip install --upgrade pip
 pip install dist/*.whl
+pip install -e .  # installs jax
 ```
 
-## Test JAX
+## Install and test JAX
 
-Running a simple test script from the Jax repo https://github.com/google/jax
+Write a simple test Python script from the Jax repo https://github.com/google/jax
 
 ```
 from jax import grad
@@ -206,4 +208,11 @@ def tanh(x):  # Define a function
 grad_tanh = grad(tanh)  # Obtain its gradient function
 print(grad_tanh(1.0))   # Evaluate it at x = 1.0
 # prints 0.4199743
+```
+
+Run the test:
+
+```
+(base) catid@nuc:~$ python temp.py
+0.4199743
 ```
