@@ -183,5 +183,27 @@ cd jax
 sudo apt install g++ python3 python3-dev
 pip install numpy wheel
 python build/build.py --enable_cuda --cuda_path /usr/local/cuda-11.8 --cudnn_path /usr
+```
+
+The build takes about 30 minutes on a modern processor.  Finally, time to install!
+
+```
 pip install dist/*.whl
+```
+
+## Test JAX
+
+Running a simple test script from the Jax repo https://github.com/google/jax
+
+```
+from jax import grad
+import jax.numpy as jnp
+
+def tanh(x):  # Define a function
+  y = jnp.exp(-2.0 * x)
+  return (1.0 - y) / (1.0 + y)
+
+grad_tanh = grad(tanh)  # Obtain its gradient function
+print(grad_tanh(1.0))   # Evaluate it at x = 1.0
+# prints 0.4199743
 ```
