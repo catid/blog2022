@@ -216,3 +216,5 @@ Run the test:
 (base) catid@nuc:~$ python temp.py
 0.4199743
 ```
+
+I used `tmux` and `watch nvidia-smi` in a second pane to verify that the GPU was actually getting used for this script.
