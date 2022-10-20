@@ -172,23 +172,6 @@ sudo apt install libcudnn8-dev
 
 This seems to put the cudnn library headers/files under /usr, so we have to specify that in the next step.
 
-## Install TensorRT
-
-Download the .deb from https://developer.nvidia.com/nvidia-tensorrt-8x-download
-
-This also requires an Nvidia developer account.
-
-I downloaded and installed this file:
-
-```
-sudo dpkg -i nv-tensorrt-repo-ubuntu2004-cuda11.6-trt8.4.3.1-ga-20220813_1-1_amd64.deb
-sudo apt-key add /var/nv-tensorrt-repo-ubuntu2004-cuda11.6-trt8.4.3.1-ga-20220813/c1c4ee19.pub
-
-sudo apt-get update
-sudo apt-get install tensorrt uff-converter-tf onnx-graphsurgeon
-sudo apt-get install python3-libnvinfer-dev
-```
-
 ## Build and install jaxlib
 
 These steps are from https://jax.readthedocs.io/en/latest/developer.html#building-from-source
