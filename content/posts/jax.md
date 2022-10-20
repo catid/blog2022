@@ -170,9 +170,17 @@ sudo cp /var/cudnn-local-repo-ubuntu2204-8.6.0.163/cudnn-local-FAED14DD-keyring.
 sudo apt install libcudnn8-dev
 ```
 
-This seems to put the cudnn library headers/files under /usr, so we have to specify that in the next step.
+This seems to put the cudnn library headers/files under `/usr`.
 
-## Build and install jaxlib
+## Easy install jax
+
+This seems to work fine:
+
+```
+pip install --upgrade "jax[cuda]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+```
+
+## Manual build and install jaxlib
 
 These steps are from https://jax.readthedocs.io/en/latest/developer.html#building-from-source
 
@@ -194,7 +202,7 @@ pip install dist/*.whl
 pip install -e .  # installs jax
 ```
 
-## Install and test JAX
+## Test JAX
 
 Write a simple test Python script from the Jax repo https://github.com/google/jax
 
