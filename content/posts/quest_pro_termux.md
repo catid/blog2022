@@ -130,6 +130,27 @@ We need to be able to set up some apps, and be able to return to that layout ver
 
 If all these things are solved, then software development on a VR headset will feel fairly frictionless and similar to a real desktop.
 
-Finally, something that anyone can work on and sell as an app I would buy:
 
-(7) We need a VR port of Visual Studio Code.  Using code-server from a browser is just awful compared to a desktop experience.
+## Software Engineering App Ideas
+
+Finally, some app ideas that anyone can work on and sell and I would gladly pay over $50 for:
+
+* VR Panel port of https://tabby.sh - Just being able to remotely log into servers from VR would be amazing.  One of the best features of Tabby.sh is that you can automatically resume a large number of remote sessions each time it launches (having it write `tmux a` automatically for you).
+
+Immersed and Virtual Desktop could both do this pretty quick compared to someone starting from scratch.
+
+* VR Panel port of Windows Subsystem for Linux (WSL).  We need the full, multi-user headless version of Ubuntu 22.04 to run on the headset.  That means just a console no GUI.
+
+Even if it's entirely headless (not even a console), you can shell into it using tabby.sh and use Linux tools from a separate app.  But it would be harder to fix if anything went wrong, so probably a console is required eventually.
+
+An alternative to full VM is a proot environment like Termux with https://github.com/termux/proot-distro - I would prefer this if it can still launch all the same apps, since it would be much more efficient than a VM.
+
+All the "use your headset like a computer" apps like Virtual Desktop or Immersed VR are doing remote access GUI things, which is completely useless in most places you'd use a laptop.  Fixing that would get a lot of people excited since it opens up new ways to use the headset.  What Quest is trying to replicate right now is basically what Android has already when you plug a phone into an external monitor.  To get beyond that, we need to be able to launch full desktop apps.  I believe the engineering effort is too high to just port every single desktop experience like VS Code, though that is the long-term play (think on the order of 10 years).  The next practical step is to just virtualize the PC to leverage the available tools on Linux.
+
+* VR Panel port of an X server and/or virtual WM (window manager).
+
+Even with existing Termux, a good X server for Android doesn't exist right now.  Once we have an X server we can run a full desktop environment, we can run Chrome, Code and other *real* apps, even if they'll run a little slower.  X server performance is a big deal, so part of what's hard about this is making it run fast.
+
+An even better option would be a virtual window manager, which would allow an even better experience.  That would give us native rendering for window decoration and the ability to lay out windows around us instead of being constrained to a single "screen" panel.
+
+* VR Panel port of Visual Studio Code.  Using code-server from a browser is just awful compared to a desktop experience.  The problem is that Code is all about the plugins like the remote extensions, and I'm not sure how easy those are to port.  So this might be higher lift than expected.  A deeper port that explodes each of the panes out separately so it's not just one big "screen" panel would be amazing.
