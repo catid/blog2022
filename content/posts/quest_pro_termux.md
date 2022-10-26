@@ -103,15 +103,26 @@ I did not need to follow the instructions to edit the bashrc scripts etc.
 After code-server was installed, I was able to run it, and I used vim to edit its config file to set the password to something more reasonable.
 
 
-## What's next?
+## Things That Don't Work (AKA Why You Don't Want This Yet)
 
-Well, I didn't much like code-server for text editing due to lots of bugs and general input sluggishness.
+Here's my laundry list.  If Meta wants this platform to actually work for software engineers (themselves included), then we need a few things fixed.
 
-Hopefully someone writes a VR port of VS Code, so we can use that for doing professional software development where we mostly will shell into a build server rather than building things locally.
+Better keyboard/mouse support:
 
-Also I hope that Quest Pro gets better support for keyboard/mouse.  I would like the Windows key to bring up the app bar so you don't need to use a controller for that.  I would also like to be able to click on permission boxes with the bluetooth mouse.
-Too many apps have the virtual keyboard pop up when it's not wanted, so that feels pretty janky when you have a real keyboard in front of you.
+(1) The Windows Key on the keyboard should bring up the task tray.
+(2) The bluetooth mouse should be able to accept permission dialogs.
+(3) When using a bluetooth keyboard, the virtual keyboard should *never* pop up.  Currently it pops up in every app - super obnoxious.
 
-Also, I would love to have the concept of desktops like in Windows, which seems like a minimal ask.  On Windows, I usually have about 3-4 desktops full of apps that I switch between, and it's a huge time saver.  On Quest I'd love to be able to set up a few apps on each desktop the way I want, and be able to get in and out of that desktop so I can use other apps and return to the same consistent workspace.
+The goal should be to be able to launch apps and use important system features without needing to reach for controllers or use hand tracking.  I'd prefer to just not have hand tracking enabled since it often times puts distracting blobs on top of what I'm trying to do.
 
-We really need to be able to copy text from the Meta browser app and paste it into apps like Termux or a code editor.
+(4) We really need to be able to copy text from the Meta browser app and paste it into apps like Termux or a code editor.
+
+Enough said.
+
+(5) Home needs to support app layouts, what Windows calls "virtual desktops."
+
+We need to be able to set up some apps, and be able to return to that layout very quickly.  On Windows, I can press Win+Tab or Ctrl+Win+Arrow to rapidly change between sets of apps.  Right now any time I launch something or go to Settings, my layout gets wrecked and I need to fix it.
+
+(6) We need a VR port of Visual Studio Code.  Using code-server from a browser is just awful compared to a desktop experience.
+
+If all these things are solved, then software development on a VR headset will feel fairly frictionless and similar to a real desktop.
