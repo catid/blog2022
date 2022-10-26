@@ -5,7 +5,7 @@ cover = "posts/quest_pro_termux/quest_pro_termux.png"
 description = "Interesting demo, but needs better support from Meta for real productive use."
 +++
 
-## Video of everything working:
+## Video Demo
 
 https://www.youtube.com/watch?v=9D6UsUBzAp4
 
@@ -21,7 +21,7 @@ Inside the headset, the Settings app has a Devices section where you can pair Bl
 You can turn on Pass-Through for the Home environment, so that you can see the real world behind the virtual monitors.  The trick is to click on the clock/battery/wifi button on the task bar, and click the "face mask with lines coming off" it icon.
 
 
-## Enable developer mode:
+## Enable Developer Mode
 
 In the Meta Quest app on your phone, select the menu-burger in the lower right.
 Select Devices.
@@ -46,7 +46,7 @@ List of devices attached
 ```
 
 
-# Download Termux:
+# Download Termux
 
 Download the APK from:
 https://f-droid.org/en/packages/com.termux/
@@ -66,7 +66,7 @@ Success
 We are now done with the desktop computer, so you can unplug your Quest Pro from the PC.
 
 
-## Launch Termux:
+## Launch Termux
 
 In the Quest app list, select the Sources drop-down in the upper right and select `Unknown Sources...`
 
@@ -75,7 +75,7 @@ Click on Termux to launch it.
 It will show a virtual keyboard.  The fast way to dismiss it is to start typing on your Bluetooth keyboard, which will prevent it from popping up again.
 
 
-## Quest Multitasking Setup:
+## Quest Multitasking Setup
 
 With your Bluetooth mouse you can select the white line at the bottom of the app to move it away to a comfortable distance.
 
@@ -86,7 +86,7 @@ To do multi-tasking, click and hold one of the task bar buttons, and drag it nex
 You should be able to get the Oculus Browser running next to Termux, which is a good setup for what we're going to do next.
 
 
-## Install Debian and Code-Server:
+## Install Debian and Code-Server
 
 We will use the port from https://coder.com/docs/code-server/latest/termux
 
@@ -103,7 +103,7 @@ I did not need to follow the instructions to edit the bashrc scripts etc.
 After code-server was installed, I was able to run it, and I used vim to edit its config file to set the password to something more reasonable.
 
 
-## Things That Don't Work (AKA Why You Don't Want This Yet)
+## Things That Don't Work
 
 Here's my laundry list.  If Meta wants this platform to actually work for software engineers (themselves included), then we need a few things fixed.
 
