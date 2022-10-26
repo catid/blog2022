@@ -31,7 +31,8 @@ Set it to enabled.
 
 Plug in the headset to your computer with a USB-C cable.  In the headset click the box to Allow the computer to access everything.  You don't need the controllers for this - I just did it with hand tracking turned on.  You'll need to do this each time you replug the headset.
 
-Install ADB on your computer:
+
+## Install ADB
 
 Download and unzip SDK Platform-Tools from https://developer.android.com/studio/releases/platform-tools
 
