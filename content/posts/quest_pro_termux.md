@@ -66,7 +66,7 @@ Success
 
 We are now done with the desktop computer, so you can unplug your Quest Pro from the PC.
 
-As an aside, I've noticed most people recommending tools like SideQuest or *random afternoon Windows app project* for loading APKs.  The method I just described is so much easier, faster, safer, and more powerful.
+As an aside, I've noticed most people recommending tools like SideQuest or *random afternoon Windows app project* for loading APKs.  The method I just described is so much easier, faster, safer, and more powerful.  Meta should probably add this to their FAQ as the official way of doing this.
 
 
 ## Launch Termux
