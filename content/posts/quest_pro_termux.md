@@ -116,14 +116,20 @@ Better keyboard/mouse support:
 
 The goal should be to be able to launch apps and use important system features without needing to reach for controllers or use hand tracking.  I'd prefer to just not have hand tracking enabled since it often times puts distracting blobs on top of what I'm trying to do.
 
-(4) We really need to be able to copy text from the Meta browser app and paste it into apps like Termux or a code editor.
+(4) Android apps should show up in the task tray.
+
+Currently they don't go into the 3 recent apps list, and instead you have to go through the Apps list all over again.
+
+(5) We really need to be able to copy text from the Meta browser app and paste it into apps like Termux or a code editor.
 
 Enough said.
 
-(5) Home needs to support app layouts, what Windows calls "virtual desktops."
+(6) Home needs to support app layouts, what Windows calls "virtual desktops."
 
 We need to be able to set up some apps, and be able to return to that layout very quickly.  On Windows, I can press Win+Tab or Ctrl+Win+Arrow to rapidly change between sets of apps.  Right now any time I launch something or go to Settings, my layout gets wrecked and I need to fix it.
 
-(6) We need a VR port of Visual Studio Code.  Using code-server from a browser is just awful compared to a desktop experience.
-
 If all these things are solved, then software development on a VR headset will feel fairly frictionless and similar to a real desktop.
+
+Finally, something that anyone can work on and sell as an app I would buy:
+
+(7) We need a VR port of Visual Studio Code.  Using code-server from a browser is just awful compared to a desktop experience.
