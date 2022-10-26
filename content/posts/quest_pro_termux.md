@@ -131,7 +131,7 @@ We need to be able to set up some apps, and be able to return to that layout ver
 If all these things are solved, then software development on a VR headset will feel fairly frictionless and similar to a real desktop.
 
 
-## Software Engineering App Ideas
+## Productivity App Ideas
 
 Finally, some app ideas that anyone can work on and sell and I would gladly pay over $50 for:
 
