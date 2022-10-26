@@ -18,7 +18,7 @@ Either hand tracking or the controllers are required, because keyboard/mouse is 
 
 Inside the headset, the Settings app has a Devices section where you can pair Bluetooth devices.
 
-You can turn on Pass-Through for the Home environment, so that you can see the real world behind the virtual monitors.  The trick is to click on the clock/battery/wifi button on the task bar, and click the "face mask with lines coming off" it icon.
+You can turn on Pass-Through for the Home environment, so that you can see the real world behind the virtual monitors.  The trick is to click on the clock/battery/wifi button on the task bar, and click the "face mask with lines coming off it" icon.
 
 
 ## Enable Developer Mode
