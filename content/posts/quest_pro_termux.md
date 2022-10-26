@@ -153,4 +153,6 @@ Even with existing Termux, a good X server for Android doesn't exist right now. 
 
 An even better option would be a virtual window manager, which would allow an even better experience.  That would give us native rendering for window decoration and the ability to lay out windows around us instead of being constrained to a single "screen" panel.
 
-* VR Panel port of Visual Studio Code.  Using code-server from a browser is just awful compared to a desktop experience.  The problem is that Code is all about the plugins like the remote extensions, and I'm not sure how easy those are to port.  So this might be higher lift than expected.  A deeper port that explodes each of the panes out separately so it's not just one big "screen" panel would be amazing.
+* VR Panel port of Visual Studio Code.
+
+Using code-server from a browser is just awful compared to a desktop experience.  The problem is that Code is all about the plugins like the remote extensions, and I'm not sure how easy those are to port.  So this might be higher lift than expected.  A deeper port that explodes each of the panes out separately so it's not just one big "screen" panel would be amazing.
