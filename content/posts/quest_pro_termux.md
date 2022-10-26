@@ -109,4 +109,7 @@ Hopefully someone writes a VR port of VS Code, so we can use that for doing prof
 
 Also I hope that Quest Pro gets better support for keyboard/mouse.  I would like the Windows key to bring up the app bar so you don't need to use a controller for that.  I would also like to be able to click on permission boxes with the bluetooth mouse.
 Too many apps have the virtual keyboard pop up when it's not wanted, so that feels pretty janky when you have a real keyboard in front of you.
+
 Also, I would love to have the concept of desktops like in Windows, which seems like a minimal ask.  On Windows, I usually have about 3-4 desktops full of apps that I switch between, and it's a huge time saver.  On Quest I'd love to be able to set up a few apps on each desktop the way I want, and be able to get in and out of that desktop so I can use other apps and return to the same consistent workspace.
+
+We really need to be able to copy text from the Meta browser app and paste it into apps like Termux or a code editor.
