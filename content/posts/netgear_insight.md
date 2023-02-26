@@ -48,7 +48,7 @@ While setting up the switches, I'd recommend adding one LAN network at first, an
 
 ## WAP Setup
 
-If you are depending on your router for WiFi, then use a dedicated WAP instead.  Ruckus R650 is my recommendation for WAP.  I've heard good things about Netgear and Ubiquiti WAP as well, though my bet is the Ruckus ones are better.  The configuration options on the Ruckus WAP are amazing, and they're designed for huge enterprise installations so they have lots of cool mitigations for hidden node and other signal interference problems.  If your WAP does not support VLANs, then it's probably not worth using if you're using VLANs for the rest of your network.
+If you are depending on your router for WiFi, then use a dedicated WAP instead.  Ruckus R650 is my recommendation for WAP.  I've heard good things about Netgear and Ubiquiti WAP as well, though my bet is the Ruckus ones are better.  The configuration options on the Ruckus WAP are amazing, and they're designed for huge enterprise installations so they have lots of cool mitigations for hidden node and other signal interference problems.  I'm seeing consistent 1Gbps download speed test results from fast.com, sitting on the living room couch in the same room as the WAP, 500 Mbps in the garage, and 350 Mbps in the farthest guest room.  If your WAP does not support VLANs, then it's probably not worth using if you're using VLANs for the rest of your network.
 
 I'd recommend setting up a temporary WiFi network directly off the Firewalla/router while working on this stuff, since it helps regain access more quickly if anything goes wrong.
 
