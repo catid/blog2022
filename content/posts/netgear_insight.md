@@ -1,6 +1,7 @@
 +++
 title = "LAG/VLAN on Netgear Insight switches"
 date = "2023-02-25"
+cover = "posts/netgear_insight/office.jpg"
 description = "20G is the new 10G"
 +++
 
@@ -49,7 +50,7 @@ While setting up the switches, I'd recommend adding one LAN network at first, an
 
 If you are depending on your router for WiFi, then use a dedicated WAP instead.  Ruckus R650 is my recommendation for WAP.  I've heard good things about Netgear and Ubiquiti WAP as well, though my bet is the Ruckus ones are better.  The configuration options on the Ruckus WAP are amazing, and they're designed for huge enterprise installations so they have lots of cool mitigations for hidden node and other signal interference problems.  If your WAP does not support VLANs, then it's probably not worth using if you're using VLANs for the rest of your network.
 
-I found it helpful to set up a temporary WiFi network directly off the Firewalla while I was setting up all the switches.
+I'd recommend setting up a temporary WiFi network directly off the Firewalla/router while working on this stuff, since it helps regain access more quickly if anything goes wrong.
 
 
 ## Planning
@@ -69,7 +70,7 @@ In the Insight app, I was then able to add the device.  If the device shows up u
 
 To manage the devices, I prefer the web interface to the cellphone one.  On my Windows PC, Chrome did not load the web interface (perhaps due to ad blocker?) so I use Edge instead: https://insight.netgear.com/  You can click the flask icon on the right to activate dark mode, which looks a lot better.
 
-On my router, I assigned reserved IP addresses and hostnames for all the switches at this point, which made it easier to ping them later to test connections.
+On my router, I assigned reserved IP addresses and hostnames for all the switches at this point, which made it easier to ping them later to test connections.  On Windows I use the cmd.exe CLI and use e.g. `ping -t garagepoe.lan` to keep pinging the device continuously while testing.
 
 It takes a bit for them all to firmware update, but this process is automated and just takes some patience.  You can schedule synchronized firmware updates to happen on weekends so they don't happen during normal use during the week.
 
@@ -102,9 +103,7 @@ After all the LAGs are done, it's time to set up the VLANs.
 
 Navigate to `All > Wired > Settings > VLAN/Network Setup`.
 
-There are some default VLANs configured like 4089 for "video."  Delete these unless you're smarter than me.  I tried them for carrying video and they do not work.
-
-The first thing to do is to list them out.  NETGEAR is preconfigured with a Video VLAN ID 4089, so I'm using that one for my security cameras.  Otherwise:
+Note there are some default VLANs configured like 4089 for "video."  Delete these unless you're smarter than me.  I tried them for carrying video and they do not work.
 
 ```
 VLAN 1 (built-in): Management : Data : QoS=0 : Switches and WAP only.
@@ -121,9 +120,9 @@ VLAN 1 is the only one where DHCP client should be enabled, since we want the sw
 
 ## Setting up VLAN Trunks
 
-Similar to the LAG setup, I would recommend doing this slowly and methodically with testing.  First, configure the VLAN tagging for LAGs and other connections between switches.  Configure one connection at a time and test it before moving on.  Configure the deepest switches in the network (away from the router) first, and move towards the router.
+Similar to the LAG setup, I do this slowly and methodically with testing, since I've casually locked myself out several times doing this part.  First, configure the VLAN tagging for LAGs and other connections between switches.  Configure one connection at a time and test it before moving on.  Configure the deepest switches in the network (away from the router) first, and move towards the router.
 
-First remove your normal switch inter-connections, and install a cheat cable between each pair of switches you'll be updating the VLAN rules on.  Then after verifying the link works with ping.  On Windows I use the cmd.exe CLI and use e.g. `ping -t garagepoe.lan` to keep pinging the device continuously while testing.
+First remove your normal switch inter-connections, and install a cheat cable between each pair of switches you'll be updating the VLAN rules on.  Then after verifying the link works (by pinging the remote switch):
 
 Navigate to `All > Wired > Settings > VLAN/Network Setup > Select a VLAN > Port Members > (+) Expand`.
 
@@ -131,7 +130,7 @@ You can select [Access Port] [Trunk Port] [Port Authentication Mode] and [Delete
 
 Note that when you select a LAG, it should notify you "Lag X is selected."  I would do these one at a time to avoid any bugs in the web app, since it seems to be a bit of a special case.
 
-IMPORTANT: Only configure [Trunk Ports] at first - Get the switches connected before setting up any access ports!  Don't rush this part because it's easy to lose access here.
+WARNING: Only configure [Trunk Ports] at first - Get the switches connected before setting up any access ports!  Don't rush this part because it's easy to lose access here.
 
 Set all switch inter-connection ports to [Trunk Port].
 
@@ -152,12 +151,12 @@ It should be safe to set the uplink to your router as a trunk as well, since you
 
 ## Things that can go wrong
 
-If during VLAN setup traffic suddenly stops routing and the lights are blinking weird on the rack, then you might have a multicast storm.  This is usually caused by not having exactly synchronized VLAN settings on both sides of a trunk.  To check to make sure you can look at the device logs and you should see the trunk port indicate a multicast storm error.
+If during VLAN setup traffic suddenly stops routing and the lights are blinking weird on the rack, then you might have a multicast storm.  This is usually caused by not having exactly synchronized VLAN settings on both sides of a trunk.  To check this, you can look at the device logs and you should see the trunk port indicate a multicast storm error.
 
 
 ## Setting up router VLANs
 
-Now you can set up the same VLANs in your router that you set up on the switches, and configure any policies you want, such as disallowing the IoT VLAN from starting a connection with your Trusted VLAN.
+Now you can set up the same VLANs in your router/firewall that you set up on the switches and configure any policies you want.  One such policy would be disallowing the IoT VLAN from starting a connection with your Trusted VLAN.
 
 If anything goes wrong, you can always go back to LAN mode on the router and then double-check the switch configurations.
 
@@ -195,41 +194,43 @@ Click [Save].
 
 ## RADIUS/MAC/IP Filters
 
-I haven't bothered setting this stuff up yet, but maybe once things settle on my network I'll turn these on.  Once thing I like about the Firewalla is that once the network has mostly settled you can enable a Quarantine mode that allows you to set access rules for any devices with unrecognized MAC addresses, and since VLANs are set up you can tell how the new device is connected to the network just by looking at its IP address.  This is just for my home network, so physical security is not a huge deal.  The main thing is just setting good WiFi passwords.
+I haven't bothered setting this stuff up yet, but maybe once things settle on my network I'll turn these on.  Once thing I like about the Firewalla is that once the network has mostly settled you can enable a Quarantine mode that allows you to set access rules for any devices with unrecognized MAC addresses, and since VLANs are set up you can tell how the new device is connected to the network just by looking at which subnet its IP address is on.
+
+This is just for my home network after all, so physical security is not a huge deal.  The main concerns are setting good WiFi passwords and separating IoT/Guest devices from trusted devices.
 
 
 ## Testing Performance
 
 A good test is to run ping for a while on each switch and check for latency spikes on the unloaded network.  If you're seeing lag spikes now, it's only going to get worse.
 
-I tested a little and found that the UniFi switch I had mixed in was causing some latency spikes, so ended up returning it.  I have formed an opinion at this point about UniFi products that you can read more about below.
+I tested a little and found that the UniFi switch I had mixed in was causing some latency spikes, so I ended up returning it.  I have formed an opinion at this point about UniFi products that you can read more about below.
 
-Before testing throughput, I'd recommend at this point to install the switches in the house where they are ending up to check for any cabling issues.  After they're installed you can go to `All > Devices` and select a switch to inspect, and then mouse-over each port to check if the ports are connected at the full, expected speed.
+Before testing throughput, I'd recommend at this point to install the switches in the house where they are ending up to check for any cabling issues.  After they're installed you can go to `All > Devices` and select a switch to inspect.  Then, mouse-over each port to check if the ports are connected at the full, expected speed.
 
-In my case I found that one of the RJ45 CAT6 runs in the wall could only negotiate at 5G instead of 10G.
+In my case I found that one of the RJ45 connections between rooms could only negotiate at 5G instead of 10G.  This was fixed by replacing one of the cables along that path.
 
-For performance testing, I prefer real-world tests like checking the `fast.com` Internet speed, downloading a game on Steam, or measuring read/write NAS performance.
+For performance testing, I prefer real-world tests like checking the `fast.com` Internet speed, downloading a game on Steam, or measuring read/write NAS performance.  Note that a NAS is a good place to host a speed test webapp like LibreSpeed Speedtest.
 
 
 ## My experience with NETGEAR competitors
 
-Feel free to skip my rant, but I had some trouble settling on these being the switches to buy.  I have bias towards buying a lot of switches from one vendor rather than mixing and matching, so that I could view them from one cloud portal, and I am less price-conscious than most people.
-
-Mikrotik products look a bit overpriced and finnicky in practice.  They don't have any 2.5G PoE switches yet, so aren't ideal for my Ruckus R650 WAP, which has a 2.5G uplink.  The most interesting 10G offering is the CRS312-4C+8XG-RM, which is $600, so $100 more than NETGEAR, and you still have to buy a bunch of $50 SFP+ transceivers if you want copper.  That's the hidden price with Mikrotik - The transceivers are a minefield of power/thermal and multi-gig compatibility issues.  They do sell some 1G PoE switches that would be just fine for security cameras by themselves.  NETGEAR stuff seems more "reliable", better build quality, less time to set up, it's an American brand, and supports 2.5G PoE.  I've heard their switches get noisy under load to deal with the thermal issues.
-
-One 10G Mikrotik product really stands out as being excellent value: The CRS309.  No fan in it, so no need to worry about that.  It's got two processors instead of one in the CRS312, so it can do a bit of layer 3 work if needed, like maybe an IGMP proxy to get Sonos speakers working across VLANs.  It has 8 SFP+ 10G ports - so it's comparable to the UniFi Switch Aggregation.  And for that role it's so much better value than the UniFi switch.  I ended up using one of these to aggregate three Netgear switches on a rack.  I absolutely love having one of these switches central to the network where the really detailed network statistics and tools add extra firepower that NETGEAR is lacking.  You really don't want to run 10G RJ45 transceivers on these, as without a fan they are going to overheat and throttle.
-
-CISCO CBS350 10Gx8 switch is not multi-gig, and also seems to have significantly worse 10G performance fully configured with VLANs.  The CISCO switch is super loud and 2.5X more expensive.  Cloud management has a minimum of 15 devices for $800/year.  Compare to $10/year from NETGEAR.  I used it for a few weeks and returned it.
+Feel free to skip my rant, but I had some trouble navigating the confusing landscape of managed switches.  I have bias towards buying most of the switches from one vendor rather than mixing and matching, so that I can view them from one cloud portal.  And I am less price-conscious than most people.
 
 QNAP M2116P-2T2S-US has 2 10G ports, 2 SFP+ ports, and 16 2.5G PoE ports.  No cloud management, and you wouldn't want to use it since these are headquartered in Taiwan.  So it has less 10G ports, but 2x the PoE ports, while costing just $150 more than the MS510TXUP.  I wanted more 10G connectivity, and I wanted the remote management, so didn't go with these.  It doesn't support link aggregation, which I was excited about.  Its VLAN tagging is pretty limited in frustrating ways, requiring at least one port be dedicated to VLAN 1, so I ended up just putting all my devices on VLAN 1 instead of properly separating management from trusted devices.  I used it for a few weeks and returned it.
 
-Ubiquiti/UniFi: I've tried one of their Switch Aggregation 10Gx4 with the Tamagachi on the side.  Note that these only really support fiber or DAC but not RJ45 copper connections.  Also using their rack PDU.  Both have great prices and availability.  None of the rest of their useful products are in stock anymore.  However, the Switch Aggregation I ended up returning because during testing I noticed it was causing occasional huge 10+ms latency spikes just on the wired network.  Replaced with a Mikrotik CRS309-1G-8S+IN that does not have these issues.
+CISCO CBS350 10Gx8 switch is not multi-gig, and also seems to have significantly worse 10G performance fully configured with VLANs.  The CISCO switch is super loud and 2.5X more expensive.  Cloud management has a minimum of 15 devices for $800/year.  Compare to $10/year from NETGEAR.  I used it for a few weeks and returned it.
 
-Not a fan of UniFi brand for many reasons.  They have production issues and cannot keep up with demand.  They seem to prioritize aesthetics over functionality.  Eero mesh routers are super overpriced and don't support VLAN for example, when Ruckus R650 is cheaper and can do the job of two of them (better) while supporting an enterprise-level featureset.  They try hard to sell you useless $200 "cloud key" devices you can self-host on your NAS in 30 minutes.  Their routers are huge and expensive and perform worse than much cheaper products like Firewalla or free ones like OPNsense.  So, they have a ton of "gotcha" products that should not exist, and it makes them seem very shady.
+Mikrotik products look a bit overpriced and finnicky to set up.  They don't have any 2.5G PoE switches yet, so aren't ideal for my Ruckus R650 WAP, which has a 2.5G uplink.  The most interesting 10G offering is the CRS312-4C+8XG-RM, which is $600, so $100 more than NETGEAR, and you still have to buy a bunch of $50 SFP+ transceivers if you want copper.  That's the hidden price with Mikrotik - The transceivers are a minefield of power/thermal and multi-gig compatibility issues.  I've heard their switches get noisy under load to deal with the thermal issues.  They do sell some 1G PoE switches that would be just fine for security cameras by themselves.  NETGEAR stuff seems more "reliable", better build quality, much less time to set up, it's an American brand (now a benefit in 2023), and supports 2.5G PoE/multi-gig.
 
-Their products are poorly documented in many ways.  For example I bought the Switch Aggregation assuming I could put 8 copper transceivers on it, but it turns out only half of the ports can accept transceivers, which I only noticed after reading the specifications sheet twice and paying attention to the very fine print.  There are lots of similar hidden suprises that should have been well documented so that people can plan their network on paper before actually buying and trying things, like how the Switch Aggregation can only do LAG on certain pairs of ports and so on.  I've heard the rest of their products have lots of other little landmines you can step on.  Like how the Switch Aggregation can only allow "All" VLANs but will not let you pick which ones make it through, and how it causes periodic 10ms latency spikes, which finally made me return it.
+One 10G Mikrotik product really stands however: The CRS309.  For an aggregation switch it's amazing value.  No fan in it, so no need to worry about that.  Since the configuration for this role is simple, the learning curve is not so steep.  It's got two processors instead of one in the CRS312, so it can do a bit of layer 3 work if needed, like maybe an IGMP proxy to get Sonos speakers working across VLANs.  It has 8 SFP+ 10G ports, so it's most comparable to the UniFi Switch Aggregation.  And for that role it's so much better value than the UniFi switch.  I ended up using one of these to aggregate three Netgear switches on a rack.  I absolutely love having one of these switches central to the network where the really detailed network statistics and tools add extra firepower that NETGEAR is lacking.  You really don't want to run 10G RJ45 transceivers on these, as without a fan they are going to overheat and throttle.
 
-I don't like UniFi's return policy which has restocking fees if you open the box and is more complicated than usual.  Other switches I tried all were available on Amazon, which offers the best return policy in the world.
+Ubiquiti/UniFi: I've tried one of their Switch Aggregation 10Gx4 with the Tamagochi on the side.  Note that these only really support fiber or DAC but not RJ45 copper connections.  Also I'm using their metered/switched PDU on both racks, though their app buries all the useful features many menus deep, and it requires setting up a special docker container on its subnet to control them.  The PDUs have great prices and availability.  None of the rest of their useful products are in stock anymore.  However, the Switch Aggregation I ended up returning because during testing I noticed it was causing occasional huge 10+ms latency spikes just on the wired network.  Replaced it with a Mikrotik CRS309-1G-8S+IN that does not have these issues.
+
+So, I'm not a fan of UniFi brand for many reasons.  They have production issues and cannot keep up with demand, leading to an exploitive grey market.  They seem to prioritize aesthetics over functionality.  UniFi Eero mesh routers are super overpriced and don't support VLAN, and they encourage you to buy like 3 of them to cover your whole house+garage, while the Ruckus R650 is cheaper and can easily cover a whole house+garage.  They try hard to sell you useless $200 "cloud key" devices you can self-host on your NAS in 30 minutes.  Their routers are huge and expensive and perform worse than much cheaper products like Firewalla or free ones like OPNsense.  So, they have a ton of "gotcha" products that should not exist, and it makes them seem very shady.
+
+UniFi's products are poorly documented in many ways.  For example I bought the Switch Aggregation assuming I could put 8 copper transceivers on it, but it turns out only half of the ports can accept transceivers, which I only noticed after reading the specifications sheet twice and paying attention to the very fine print.  There are lots of similar hidden suprises that should have been well documented so that people can plan their network on paper before actually buying and trying things, like how the Switch Aggregation can only do LAG on certain pairs of ports and so on.  Like how the Switch Aggregation can only allow "All" VLANs but will not let you pick which ones make it through, and how it causes periodic 10ms latency spikes, which finally made me return it.  I've heard the rest of their products have lots of other little landmines you can step on.
+
+Finally they get you on the way out too: UniFi's return policy has restocking fees if you open the box, and sometimes even if you don't.  They force you to ship via FedEx which in my area is like 10 miles away and means driving for an hour just to do a return.  All other switches I tried were available on Amazon, which provided a "no questions asked" full refund and free pre-paid UPS shipping.
 
 
 ## My Network Plan (For Reference)
