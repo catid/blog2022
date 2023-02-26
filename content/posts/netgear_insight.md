@@ -1,5 +1,5 @@
 +++
-title = "LAG/VLAN on Netgear Insight switches"
+title = "LAG/VLAN on Netgear Insight managed switches"
 date = "2023-02-25"
 cover = "posts/netgear_insight/office.jpg"
 description = "20G is the new 10G"
