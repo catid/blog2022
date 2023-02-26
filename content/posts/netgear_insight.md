@@ -16,6 +16,14 @@ They're super quiet for 10G managed switches, though I did put them in an enclos
 
 These switches support Netgear Cloud Insight, which means you can use a web browser or cellphone to remotely manage multiple switches in a super cool way.  It costs about $500 for lifetime use of this feature for ~5 switches, which is a steal compared to competitors.  They are American made and headquartered in San Jose, California.
 
+Central wall-hanging switch rack in the laundry room:
+
+![Laundry Room Rack](laundry.jpg)
+
+Office server rack:
+
+![Office Rack](office.jpg)
+
 
 ## Definitions and Motivation
 
