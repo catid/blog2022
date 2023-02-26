@@ -4,7 +4,7 @@ date = "2023-02-25"
 description = "20G is the new 10G"
 +++
 
-## Introduction:
+## Introduction
 
 For my new house, I decided to build a baller home network.  The goals: 10G to as many places as I could get it.  Multiple load balanced Internet uplinks.  10G to the NAS.  And it had to have remote cloud management from my phone.  All this has to start with cabling and switches.
 
@@ -17,7 +17,7 @@ They're super quiet for 10G managed switches, though I did put them in an enclos
 These switches support Netgear Cloud Insight, which means you can use a web browser or cellphone to remotely manage multiple switches in a super cool way.  It costs about $500 for lifetime use of this feature for ~5 switches, which is a steal compared to competitors.  They are American made and headquartered in San Jose, California.
 
 
-## Definitions and Motivation:
+## Definitions and Motivation
 
 LAG: Link Aggregation.  This is similar to load-balanced Dual WAN except between switches.  You connect two cables instead of one, and the switch uses a hash of source/dest addresses to evenly distribute packets between the two links and evenly load them.  You can remove a cable and it will instantly re-route to the other cable.  I'm using this for bandwidth/performance rather than reliability reasons.
 
@@ -28,7 +28,7 @@ To bridge between VLANs, the traffic must flow through the router.  Imagine tryi
 Practically people use VLANs to separate security cameras, IoT devices like TVs and printers, and Guest WiFi users, from the trusted devices on the network like your personal computer or network-attached storage (NAS).  If you think through the types of devices that are separated here, it's pretty rare that large transfers are happening between VLANs, so they are very efficient in practice.
 
 
-## Firewalla is *the* Router:
+## Firewalla is *the* Router
 
 I've been using the Firewalla Gold Pro router/firewall, and I have to say it's saved me an incredible amount of time.  To configure it you can go through a cellular Internet connection from your phone rather than needing the LAN working at all points during setup.  It made it much easier to make mistakes and learn how to configure things properly, since I was always able to hit the undo button via the phone.  It supports everything you can imagine and more, with one-tap Wireguard VPN setup.
 
@@ -37,21 +37,21 @@ The only better option is a custom server PC running OPNsense/pfSense, but only 
 While setting up the switches, I'd recommend adding one LAN network at first, and add the VLANs to the router *after* all the switches are configured.
 
 
-## WAP Setup:
+## WAP Setup
 
 If you are depending on your router for WiFi, then use a dedicated WAP instead.  Ruckus R650 is my recommendation for WAP.  I've heard good things about Netgear and Ubiquiti WAP as well, though my bet is the Ruckus ones are better.  The configuration options on the Ruckus WAP are amazing, and they're designed for huge enterprise installations so they have lots of cool mitigations for hidden node and other signal interference problems.  If your WAP does not support VLANs, then it's probably not worth using if you're using VLANs for the rest of your network.
 
 I found it helpful to set up a temporary WiFi network directly off the Firewalla while I was setting up all the switches.
 
 
-## Planning:
+## Planning
 
 I found it incredibly helpful to plan out how everything on the network would be connected in each room, down to which port was connected to which device.  This guarateed that I could simulate the whole network in my office before installing the hardware around the house.
 
 I've attached my network plan to the bottom of the blog post below to show what information is useful to collect before starting the setup.
 
 
-## Registering NETGEAR Devices:
+## Registering NETGEAR Devices
 
 I first stacked all the switches and plugged them all in, then connected them using single cables to simulate the network I was building.
 
@@ -66,14 +66,14 @@ On my router, I assigned reserved IP addresses and hostnames for all the switche
 It takes a bit for them all to firmware update, but this process is automated and just takes some patience.  You can schedule synchronized firmware updates to happen on weekends so they don't happen during normal use during the week.
 
 
-## Setting up STP:
+## Setting up STP
 
 To make this much less error-prone to set up, STP should be enabled on all the switches.  This prevents the whole network from going down if you make a loop by accident.
 
 Select `All > Wired > Settings > Spanning Tree`.  Check `Enable` and use `RSTP` mode for faster STP.  Scroll down the page and click [Select All] on all devices and LAGs.  I believe the LAGs inherit this setting from the ports if you set them up later.  Scroll to the bottom and hit [Save].
 
 
-## Setting up LAGs:
+## Setting up LAGs
 
 For all the inter-switch connections I wanted to set up dual 10G LAG, which turns out to be the first step.  After setting up VLANs it's a lot trickier to get those working since you have to undo all that VLAN config on the ports first.
 
@@ -88,7 +88,7 @@ What I've read is that Static is worse than LACP for LAGs, though I'm not sure a
 When bridging two NETGEAR switches, you're done!  You should be able to remove the cheat cable after a few seconds as the configuration applies very quickly.  Then plug in the two cables for the LAG connection and experiment with a `ping` command to see how the network reacts to removing either one of the connections.
 
 
-## Setting up VLANs:
+## Setting up VLANs
 
 After all the LAGs are done, it's time to set up the VLANs.
 
@@ -111,7 +111,7 @@ Larger QoS = Higher priority for this traffic.
 VLAN 1 is the only one where DHCP client should be enabled, since we want the switches to get an IP assigned by the router on that VLAN.  On all other VLANs, DHCP client should be set to None.
 
 
-## Setting up VLAN Trunks:
+## Setting up VLAN Trunks
 
 Similar to the LAG setup, I would recommend doing this slowly and methodically with testing.  First, configure the VLAN tagging for LAGs and other connections between switches.  Configure one connection at a time and test it before moving on.  Configure the deepest switches in the network (away from the router) first, and move towards the router.
 
@@ -142,19 +142,19 @@ Then repeat this whole thing again for each switch interconnect, including setti
 It should be safe to set the uplink to your router as a trunk as well, since your router will be in LAN mode and it will ignore VLANs for now.
 
 
-## Things that can go wrong:
+## Things that can go wrong
 
 If during VLAN setup traffic suddenly stops routing and the lights are blinking weird on the rack, then you might have a multicast storm.  This is usually caused by not having exactly synchronized VLAN settings on both sides of a trunk.  To check to make sure you can look at the device logs and you should see the trunk port indicate a multicast storm error.
 
 
-## Setting up router VLANs:
+## Setting up router VLANs
 
 Now you can set up the same VLANs in your router that you set up on the switches, and configure any policies you want, such as disallowing the IoT VLAN from starting a connection with your Trusted VLAN.
 
 If anything goes wrong, you can always go back to LAN mode on the router and then double-check the switch configurations.
 
 
-## Setting up VLAN Access Ports:
+## Setting up VLAN Access Ports
 
 Now we can finally set up all the access ports across the whole network in one go based on the network plan we made back before buying any of the hardware.  Since the trunks are all tested and working, no cheat cable is required.
 
@@ -203,11 +203,13 @@ In my case I found that one of the RJ45 CAT6 runs in the wall could only negotia
 For performance testing, I prefer real-world tests like checking the `fast.com` Internet speed, downloading a game on Steam, or measuring read/write NAS performance.
 
 
-## My experience with NETGEAR competitors:
+## My experience with NETGEAR competitors
 
 Feel free to skip my rant, but I had some trouble settling on these being the switches to buy.  I have bias towards buying a lot of switches from one vendor rather than mixing and matching, so that I could view them from one cloud portal, and I am less price-conscious than most people.
 
-Mikrotik products look a bit overpriced and finnicky in practice.  They don't have any 2.5G PoE switches yet, so aren't ideal for my Ruckus R650 WAP, which has a 2.5G uplink.  The most interesting 10G offering is the CRS312-4C+8XG-RM, which is $600, so $100 more than NETGEAR, and you still have to buy a bunch of $50 SFP+ transceivers if you want copper.  That's the hidden price with Mikrotik - The transceivers are a minefield of power/thermal and multi-gig compatibility issues.  They do sell some 1G PoE switches that would be just fine for security cameras by themselves.  NETGEAR stuff seems more "reliable", better build quality, it's an American brand, and supports 2.5G PoE.  I've heard their switches get noisy under load to deal with the thermal issues.
+Mikrotik products look a bit overpriced and finnicky in practice.  They don't have any 2.5G PoE switches yet, so aren't ideal for my Ruckus R650 WAP, which has a 2.5G uplink.  The most interesting 10G offering is the CRS312-4C+8XG-RM, which is $600, so $100 more than NETGEAR, and you still have to buy a bunch of $50 SFP+ transceivers if you want copper.  That's the hidden price with Mikrotik - The transceivers are a minefield of power/thermal and multi-gig compatibility issues.  They do sell some 1G PoE switches that would be just fine for security cameras by themselves.  NETGEAR stuff seems more "reliable", better build quality, less time to set up, it's an American brand, and supports 2.5G PoE.  I've heard their switches get noisy under load to deal with the thermal issues.
+
+One 10G Mikrotik product really stands out as being excellent value: The CRS309.  No fan in it, so no need to worry about that.  It's got two processors instead of one in the CRS312, so it can do a bit of layer 3 work if needed, like maybe an IGMP proxy to get Sonos speakers working across VLANs.  It has 8 SFP+ 10G ports - so it's comparable to the UniFi Switch Aggregation.  And for that role it's so much better value than the UniFi switch.  I ended up using one of these to aggregate three Netgear switches on a rack.  I absolutely love having one of these switches central to the network where the really detailed network statistics and tools add extra firepower that NETGEAR is lacking.  You really don't want to run 10G RJ45 transceivers on these, as without a fan they are going to overheat and throttle.
 
 CISCO CBS350 10Gx8 switch is not multi-gig, and also seems to have significantly worse 10G performance fully configured with VLANs.  The CISCO switch is super loud and 2.5X more expensive.  Cloud management has a minimum of 15 devices for $800/year.  Compare to $10/year from NETGEAR.  I used it for a few weeks and returned it.
 
