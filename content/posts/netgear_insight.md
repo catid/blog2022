@@ -41,7 +41,7 @@ Practically people use VLANs to separate security cameras, IoT devices like TVs 
 
 I've been using the Firewalla Gold Pro router/firewall, and I have to say it's saved me an incredible amount of time.  To configure it you can go through a cellular Internet connection from your phone rather than needing the LAN working at all points during setup.  It made it much easier to make mistakes and learn how to configure things properly, since I was always able to hit the undo button via the phone.  It supports everything you can imagine and more, with one-tap Wireguard VPN setup.
 
-The only better option is a custom server PC running OPNsense/pfSense, but only marginally and with a lot more cost and effort.  I'd recommend returning your router, whatever it is, and getting one of these.  Don't buy expensive customer routers - They all suck, even the $1000 ones and the ones from Ubiquiti.  Eero router does not support VLANs, for example.
+The only better option is a custom server PC running OPNsense/pfSense, but only marginally and with a lot more cost and effort.  I'd recommend returning your router, whatever it is, and getting one of these.  Don't buy expensive consumer routers - They all suck, even the $1000 ones and the ones from Ubiquiti.  Eero router does not support VLANs, for example.
 
 While setting up the switches, I'd recommend adding one LAN network at first, and add the VLANs to the router *after* all the switches are configured.
 
