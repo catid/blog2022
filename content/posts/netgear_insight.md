@@ -7,7 +7,7 @@ description = "20G is the new 10G"
 
 ## Introduction
 
-For my new house, I decided to build a baller home network.  The goals: 10G to as many places as I could get it.  Multiple load balanced Internet uplinks.  10G to the NAS.  And it had to have remote cloud management from my phone.  All this has to start with cabling and switches.
+For my new house, I decided to build a baller home network.  The goals: 10G to as many places as I could get it.  Multiple load balanced Internet uplinks.  All inter-connects at 20G.  And it had to have remote cloud management from my phone.  All this has to start with cabling and switches.
 
 Some of the rooms did not have Ethernet ports, and had firewalls in the walls to prevent more lines being added, so I used 2.5G MoCA over coax to get network connectivity.  The house fortunately had CAT6 already for the Ethernet drops.  I added one more CAT6 Ethernet drop to my office and the garage, so I could do dual 10G LAG connections for a true 10G network backbone.
 
