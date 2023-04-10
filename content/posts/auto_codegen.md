@@ -64,7 +64,7 @@ I've identified 5 techniques that can be used to improve the quality of code gen
 
 ## Method 1: Improving the Prompt
 
-For the[supercharger](https://github.com/catid/supercharger) project, I wrote and tested several different prompt templates to work towards auto-generating code.
+For the [supercharger](https://github.com/catid/supercharger) project, I wrote and tested several different prompt templates to work towards auto-generating code.
 
 * Generate code that satisfies a given function prototype and description.
 * Generate a unit test that would test a given function prototype and description.
