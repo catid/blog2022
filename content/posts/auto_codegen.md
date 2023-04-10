@@ -183,6 +183,8 @@ INFO:root:Found a good code/test pair: code=1 test=2 score=1.0
 INFO:root:Wrote final code and test to disk. Exiting...
 ```
 
+Note that this is doing one LLM query per node in the GPU cluster of 4 nodes, so it can be generating 2 candidate codes and 2 candidate tests simultaneously.
+
 ## Generated Code
 
 ```python
