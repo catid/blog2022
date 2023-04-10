@@ -42,7 +42,7 @@ And then the LLM is prompted to auto-complete the line.
 
 ## What kind of hardware do you need to run LLMs?
 
-I have found there to be very large difference between the quality of 7B, 13B, and 30B models.  The 30B models are the best, but they are also the slowest.  To run them in real-time I'm using the Baize-30B model running with model parallelism across two RTX4090 GPUs in 8-bit mode.  Since I've been doing a lot of ML lately, I already had the hardware.  Here's my GPU cluster, which is 4 machines each with 2x 4090 GPUs:
+I have found there to be very large difference between the quality of code written by 7B, 13B, and 30B models.  The 30B models are the best, but they are also the slowest.  To run them in real-time I'm using the Baize-30B model running with model parallelism across two RTX4090 GPUs in 8-bit mode.  Since I've been doing a lot of ML lately, I already had the hardware.  Here's my GPU cluster, which is 4 machines each with 2x 4090 GPUs:
 
 ![Cluster](/posts/auto_codegen/cluster.jpg)
 
