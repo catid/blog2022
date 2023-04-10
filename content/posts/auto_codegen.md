@@ -84,7 +84,7 @@ Some key prompt details that helped qualitatively:
 * "Coder always writes syntatically correct Python"
 * "Think step by step"
 * "After careful consideration"
-* Give it at about 2 examples.
+* Give it about 2 examples.
 * Do not add a space after the colon in the final [|Coder|] prompt.
 
 ## Technique 2: Parsing the Output of the LLM
