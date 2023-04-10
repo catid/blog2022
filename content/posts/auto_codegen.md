@@ -221,7 +221,7 @@ Add more test cases for larger numbers to ensure the function works correctly fo
 With these improvements, the test cases would be more comprehensive and cover a wider range of scenarios.
 ```
 
-Check out the code at [supercharger](https://github.com/catid/supercharger) to see how it works in more detail.
+Check out the code at https://github.com/catid/supercharger/ to see how it works in more detail.
 
 ## Future work
 
