@@ -42,7 +42,7 @@ And then the LLM is prompted to auto-complete the line.
 
 ## What kind of hardware do you need to run LLMs?
 
-I have found there to be very large difference between the quality of code written by 7B, 13B, and 30B models.  The 30B models are the best, but they are also the slowest.  To run them in real-time I'm using the Baize-30B model running with model parallelism across two RTX4090 GPUs in 8-bit mode.  Since I've been doing a lot of ML lately, I already had the hardware.  Here's my GPU cluster, which is 4 machines each with 2x 4090 GPUs:
+I have found there to be a very large difference between the quality of code written by 7B, 13B, and 30B models.  The 30B models are the best, but they are also the slowest.  To run them in real-time I'm using the Baize-30B model running with model parallelism across two RTX4090 GPUs in 8-bit mode.  Since I've been doing a lot of ML lately, I already had the hardware.  Here's my GPU cluster, which is 4 machines each with 2x 4090 GPUs:
 
 ![Cluster](/posts/auto_codegen/cluster.jpg)
 
@@ -84,7 +84,7 @@ Some key prompt details that helped qualitatively:
 * "Coder always writes syntatically correct Python"
 * "Think step by step"
 * "After careful consideration"
-* Give it at about 2 examples.
+* Give it about 2 examples.
 * Do not add a space after the colon in the final [|Coder|] prompt.
 
 When running the LLM, you can specify a temperature for the LLM to use.  A higher temperature means the LLM will be more creative, but also more likely to make mistakes.  A lower temperature means the LLM will be more conservative, but also more likely to repeat itself.  Repetitions are particularly bad because they are hard to detect and correct, so when generating code it's a bad idea to use temperature = 0.  I did not fine-tune the temperature and simply picked a default value of 1.0 since we are going to be generating a lot of candidates and can afford to make some mistakes.  However, when judging code quality, I used a temperature of 0 because we want code judgements to be less "random" and we do not care if the LLM repeats itself for judging purposes since we only take the first few tokens.
@@ -158,7 +158,7 @@ In fact an interesting project would be to just focus on this aspect of the LLMs
 
 This one was a bit fun for me, because I was able to pull out my old friend: The Birthday Attack (aka Paradox)!  This is fun to explain so indulge me for a moment.
 
-Imagine that you're in a room of 23 people and you want to find out if there are any two people in the room who share the same birthday.  You can do this by asking each person in the room for their birthday, and then checking to see if anyone else in the room has the same birthday.  If you do this, you will find that there is a 50% chance that you will find two people with the same birthday.  But wait, how is that possible?  There are only 365 days in a year, so the odds of two people sharing a birthday should be 1/365, right?  Well, the trick is that you're not just checking two people, you're checking 23 people.  So, the odds of two people sharing a birthday is actually 23/365 * 22/364, which is 50%.
+Imagine that you're in a room of 23 people and you want to find out if there are any two people in the room who share the same birthday.  You can do this by asking each person in the room for their birthday, and then checking to see if anyone else in the room has the same birthday.  If you do this, you will find that there is a 50% chance that you will find two people with the same birthday.  But wait, how is that possible?  There are only 365 days in a year, so the odds of two people sharing a birthday should be 1/365, right?  Well, the trick is that you're not just checking two people, you're checking 23 * 22 / 2 pairs of people, which is increasing at the square of the number of people.
 
 If you're with me, then you can see how this can be applied to code generation.  If you have a bunch of code and unit tests, the odds that any pair of them will succeed and are of good quality is low, but if you check all pairs, the odds of finding a good pair is much higher.
 
