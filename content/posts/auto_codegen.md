@@ -87,6 +87,8 @@ Some key prompt details that helped qualitatively:
 * Give it at about 2 examples.
 * Do not add a space after the colon in the final [|Coder|] prompt.
 
+When running the LLM, you can specify a temperature for the LLM to use.  A higher temperature means the LLM will be more creative, but also more likely to make mistakes.  A lower temperature means the LLM will be more conservative, but also more likely to repeat itself.  Repetitions are particularly bad because they are hard to detect and correct, so when generating code it's a bad idea to use temperature = 0.  I did not fine-tune the temperature and simply picked a default value of 1.0 since we are going to be generating a lot of candidates and can afford to make some mistakes.  However, when judging code quality, I used a temperature of 0 because we want code judgements to be less "random" and we do not care if the LLM repeats itself for judging purposes since we only take the first few tokens.
+
 ## Technique 2: Parsing the Output of the LLM
 
 There are a few challenges with using the output of the LLM directly.
