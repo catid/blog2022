@@ -122,7 +122,8 @@ The overall code cleanup workflow I ended up with is:
 2. Fix errors using the `ast` walking approach mentioned above.
 3. Strip any globals and some imports, since we are only expecting to generate functions.
 4. Strip any leading comments since we want to use our own comments to prompt the LLM.
-5. Format the code using Google `yapf` to make it look nice after all the wild indenting hacks etc.
+5. Run the code through `autoimport` to add any missing imports.
+6. Format the code using Google `yapf` to make it look nice after all the wild indenting hacks etc.
 
 ## Technique 3: Asking the LLM to Improve Code
 
