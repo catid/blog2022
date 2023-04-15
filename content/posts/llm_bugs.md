@@ -18,3 +18,5 @@ Vicuna 7B (FP16) model: 1 false alarms in 15 good examples.  Detects 0 of 13 bug
 GPT 3.5: 0 false alarms in 15 good examples.  Detects 7 of 13 bugs.
 GPT 4: 0 false alarms in 15 good examples.  Detects 13 of 13 bugs.
 ```
+
+Reproduce my results here: https://github.com/catid/supercharger/tree/main/airate
