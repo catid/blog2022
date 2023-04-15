@@ -5,7 +5,9 @@ cover = "posts/llm_bugs/llm_bugs.jpg"
 description = "The answer may surprise you."
 +++
 
-No:
+# No
+
+No, they cannot.
 
 ```
 LLaMa 65B (4-bit GPTQ) model: 1 false alarms in 15 good examples.  Detects 0 of 13 bugs.
