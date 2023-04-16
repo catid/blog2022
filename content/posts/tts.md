@@ -25,3 +25,7 @@ Here's the output:
   Your browser does not support the audio element.
 </audio>
 {{< /rawhtml >}}
+
+This model will split up the input into sentences and then generate a wav file for each sentence.  So, a good idea to reduce latency from LLM output is to split the LLM output at sentence boundaries since they are easy to separate by scanning for periods followed by a space.
+
+Then to reduce latency, the LLM can start speaking as soon as the first sentence is done being generated, and the next sentence can be generated while the first sentence is being spoken.
