@@ -19,7 +19,9 @@ tts --model_name tts_models/en/ljspeech/tacotron2-DDC_ph --vocoder_name vocoder_
 
 Here's the output:
 
+{{< rawhtml >}}
 <audio controls>
   <source src="https://catid.io/posts/tts/tts/tts_output.wav" type="audio/wav">
   Your browser does not support the audio element.
 </audio>
+{{< /rawhtml >}}
