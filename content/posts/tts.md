@@ -21,7 +21,7 @@ Here's the output:
 
 {{< rawhtml >}}
 <audio controls>
-  <source src="https://catid.io/posts/tts/tts/tts_output.wav" type="audio/wav">
+  <source src="https://catid.io/posts/tts/tts_output.wav" type="audio/wav">
   Your browser does not support the audio element.
 </audio>
 {{< /rawhtml >}}
