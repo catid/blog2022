@@ -22,7 +22,7 @@ sudo bash NVIDIA-Linux-x86_64-XXX.XX.run --uninstall
 To uninstall the Ubuntu package version:
 
 ```
-sudo apt remove nvidia-driver-515
+sudo apt remove nvidia-driver-*
 sudo apt autoremove
 ```
 
@@ -36,7 +36,8 @@ Instructions are here: https://developer.nvidia.com/cuda-downloads?target_os=Lin
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
 sudo dpkg -i cuda-keyring_1.0-1_all.deb
 sudo apt-get update
-sudo apt-get -y install cuda
+sudo apt-get -y install cuda cuda-11-8
+sudo update-alternatives --set cuda /usr/local/cuda-11.8
 sudo reboot now
 ```
 
@@ -66,13 +67,7 @@ Mon Oct 17 00:17:59 2022
 +-----------------------------------------------------------------------------+
 ```
 
-You can see version 11.8 of CUDA is installed.  Now symlink the rest of the tools into the path:
-
-```
-sudo ln -s /usr/local/cuda-11.8/bin/* /usr/bin
-```
-
-Now you can use `nvcc`, which should match:
+You can see version 11.8 of CUDA is installed.  Since we ran the up-date-alternatives command, we can now use the `nvcc` compiler.
 
 ```
 (base) catid@nuc:~$ nvcc --version
