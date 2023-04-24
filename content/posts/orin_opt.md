@@ -55,7 +55,7 @@ The Orin Nano supports 1 Gbps Ethernet, while the AGX Orin supports 10G Ethernet
 
 As far as SSH clients go, I'm using [Tabby.sh](https://tabby.sh/) which supports a tabbed interface to multiple SSH sessions, which is really useful at my place where I have over 10 sessions up at a time these days.  Visual Studio Code has a Remote Development extension that is my go-to for heavier editing tasks on the remote device.  For sending files, I prefer using `scp` from `git bash` on Windows, or FileZilla when sending many files at a time.
 
-Unlike a desktop GPU Linux setup, you'll use some new tools to monitor the system:
+Unlike a desktop GPU Linux setup, you'll use some new tools to monitor the system.  These replace `nvidia-smi`:
 
 ```bash
 catid@orin:~$ sudo jetson_clocks --show
