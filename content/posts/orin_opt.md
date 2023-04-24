@@ -7,7 +7,7 @@ description = "How to get the best performance on the Jetson Orin platform for A
 
 ## Jetson Orin
 
-The Jetson Orin is a new series of SBCs from Nvidia that is designed for autonomous vehicles.  The high end of the line is the AGX Orin 61.3GB, with 12 CPU cores and 64GB unified GPU/CPU RAM, achieving 275 TOPS performance for AI.  The low end is the Orin Nano, with 6 CPU cores and 7.16GB unified GPU/CPU RAM, achieving 40 TOPS performance for AI.  This is a really interesting product line because you can get a lot of compute in a size similar to a cellphone.  The latest iPhone 14 Pro Max provides 17 TOPS performance for AI, while costing much more than the Orin Nano.
+The Jetson Orin is a new series of SBCs from Nvidia that is designed for autonomous vehicles.  The high end of the line is the AGX Orin 64GB, with 12 CPU cores and 61.3GB unified GPU/CPU RAM, achieving 275 TOPS performance for AI.  The low end is the Orin Nano, with 6 CPU cores and 7.16GB unified GPU/CPU RAM, achieving 40 TOPS performance for AI.  This is a really interesting product line because you can get a lot of compute in a size similar to a cellphone.  The latest iPhone 14 Pro Max provides 17 TOPS performance for AI, while costing much more than the Orin Nano.
 
 Jeton Orin Nano 8GB Developer Kit: https://www.seeedstudio.com/NVIDIAr-Jetson-Orintm-Nano-Developer-Kit-p-5617.html
 
