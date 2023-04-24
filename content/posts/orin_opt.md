@@ -144,10 +144,51 @@ There are some warnings but it completes and gets you a copy of PyTorch 2.0 inst
 
 We will want to get Optimum installed on both devices, which as mentioned earlier is useful for optimizing models to run as fast as possible on the Jetson Orin platform.
 
-The documentation for Optimum is here: https://github.com/huggingface/optimum
+Optimum is based on the ONNX runtime, so we'll need to install that first.
+
+The documentation for installing ONNX runtime: https://onnxruntime.ai/docs/build/eps.html#nvidia-jetson-tx1tx2nanoxavier
+
+You have to install this from source because the latest JetPack release is not available yet as a pre-built wheel.
+
+Their documentation recommends installing libpython `3.6` but `3.8` is the one to use:
 
 ```bash
-python3 -m pip install optimum[onnxruntime]
+sudo apt install -y --no-install-recommends \
+   build-essential software-properties-common libopenblas-dev \
+   libpython3.8-dev python3-pip python3-dev python3-setuptools python3-wheel
+```
+
+You'll need the latest Linux aarch64 `.sh` script to install CMake here: https://cmake.org/download/ and then run it:
+
+```bash
+wget https://github.com/Kitware/CMake/releases/download/v3.26.3/cmake-3.26.3-linux-aarch64.sh
+chmod +x cmake-3.26.3-linux-aarch64.sh
+sudo ./cmake-3.26.3-linux-aarch64.sh --prefix=/usr/local/ --skip-license
+```
+
+This will actually overwrite a previously installed version of cmake, which you can check with `cmake --version`.
+
+Now we need to build and install the Python wheel for ONNX runtime.  This takes a very long time even on the AGX Orin, so set it and maybe check it the next day:
+
+```bash
+git clone https://github.com/microsoft/onnxruntime
+cd onnxruntime
+git checkout v1.14.1
+git submodule update --init --recursive
+
+./build.sh --config Release --update --build --parallel --build_wheel \
+ --use_tensorrt --cuda_home /usr/local/cuda --cudnn_home /usr/lib/aarch64-linux-gnu \
+ --tensorrt_home /usr/lib/aarch64-linux-gnu
+```
+
+Now we should be good to install Optimum.
+
+The documentation for Optimum is here: https://github.com/huggingface/optimum
+
+The latest code fixes some bugs:
+
+```bash
+python3 -m pip install git+https://github.com/huggingface/optimum.git#egg=optimum[onnxruntime]
 ```
 
 Upgrade two packages to resolve some errors that I encountered:
@@ -161,82 +202,54 @@ Exit the shell and re-log here to get pip packages into the path.
 
 ## Test HuggingFace Optimum
 
-Optimize the ROBERTA model with Optimum, enabling transformers-specific fusions and general optimizations:
+First let's quickly test to make sure that Optimum and ONNX runtime are working properly.
 
-```bash
-optimum-cli export onnx -m deepset/roberta-base-squad2 --optimize O2 roberta_base_qa_onnx
-```
-
-It supports other optimization modes, though `O2` does seem like the best option for the Jetson Orin platform.
-
-```
-  --optimize {O1,O2,O3,O4}
-                        Allows to run ONNX Runtime optimizations directly during the export. Some of these optimizations are specific to ONNX Runtime, and the resulting ONNX will not be usable with other
-                        runtime as OpenVINO or TensorRT. Possible options: - O1: Basic general optimizations - O2: Basic and extended general optimizations, transformers-specific fusions - O3: Same as O2 with
-                        GELU approximation - O4: Same as O3 with mixed precision (fp16, GPU-only, requires `--device cuda`)
-```
-
-Quantize the model
-
-```bash
-optimum-cli onnxruntime quantize \
-  --tensorrt \
-  --onnx_model roberta_base_qa_onnx \
-  -o quantized_roberta_base_qa_onnx
-```
-
-Write a test script.  I placed this file in the home directory as `test.py`:
+Create a new `bert.py` file:
 
 ```python
-import time
-
+from optimum.onnxruntime import ORTModelForSequenceClassification
 from transformers import AutoTokenizer
-from optimum.onnxruntime import ORTModelForQuestionAnswering
 
-model_name = "roberta_base_qa_onnx"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-ort_model = ORTModelForQuestionAnswering.from_pretrained(model_name)
+ort_model = ORTModelForSequenceClassification.from_pretrained(
+            "philschmid/tiny-bert-sst2-distilled",
+                from_transformers=True,
+                    provider="TensorrtExecutionProvider",
+                    )
 
-question = "What's Optimum?"
-text = "Optimum is an awesome library everyone should use!"
+tokenizer = AutoTokenizer.from_pretrained("philschmid/tiny-bert-sst2-distilled")
+inp = tokenizer("expectations were low, actual enjoyment was high", return_tensors="pt", padding=True)
 
-for i in range(0, 10):
-    t0 = time.time()
 
-    inputs = tokenizer(question, text, return_tensors="pt")
+result = ort_model(**inp)
+assert ort_model.providers == ["TensorrtExecutionProvider", "CUDAExecutionProvider", "CPUExecutionProvider"]
 
-    # Run with ONNX Runtime.
-    outputs = ort_model(**inputs)
-
-    answer_start_index = outputs.start_logits.argmax()
-    answer_end_index = outputs.end_logits.argmax()
-
-    predict_answer_tokens = inputs.input_ids[0, answer_start_index : answer_end_index + 1]
-    answer = tokenizer.decode(predict_answer_tokens, skip_special_tokens=True)
-
-    t1 = time.time()
-
-    print(f"Answered question in {t1 - t0} seconds")
-    print(question)
-    print(answer)
+print(result)
 ```
 
-Example output:
+Another example to try:
 
-```bash
-catid@nano:~$ python3 test.py
-Answered question in 0.049898386001586914 seconds
-What's Optimum?
- an awesome library
-Answered question in 0.04529881477355957 seconds
-What's Optimum?
- an awesome library
+```python
+import onnxruntime
+from transformers import AutoTokenizer
+from optimum.onnxruntime import ORTModelForSequenceClassification
 
-catid@orin:~$ python3 test.py
-Answered question in 0.025504589080810547 seconds
-What's Optimum?
- an awesome library
-Answered question in 0.021510839462280273 seconds
-What's Optimum?
- an awesome library
- ```
+session_options = onnxruntime.SessionOptions()
+session_options.graph_optimization_level = onnxruntime.GraphOptimizationLevel.ORT_DISABLE_ALL
+
+tokenizer = AutoTokenizer.from_pretrained("fxmarty/distilbert-base-uncased-sst2-onnx-int8-for-tensorrt")
+ort_model = ORTModelForSequenceClassification.from_pretrained(
+    "fxmarty/distilbert-base-uncased-sst2-onnx-int8-for-tensorrt",
+    provider="TensorrtExecutionProvider",
+    session_options=session_options,
+    provider_options={"trt_int8_enable": True},
+)
+
+inp = tokenizer("TensorRT is a bit painful to use, but at the end of day it runs smoothly and blazingly fast!", return_tensors="np")
+
+res = ort_model(**inp)
+
+print(res)
+print(ort_model.config.id2label[res.logits[0].argmax()])
+# SequenceClassifierOutput(loss=None, logits=array([[-0.545066 ,  0.5609764]], dtype=float32), hidden_states=None, attentions=None)
+# POSITIVE
+```
