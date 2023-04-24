@@ -44,6 +44,8 @@ And then you can specify a speaker e.g. `p330`:
 tts --model_name tts_models/en/vctk/vits --text "When I choose to see the good side of things, I'm not being naive. It is strategic and necessary. It's how I've learned to survive through everything.  I know you go through life with your fists held tight.  You see yourself as a fighter. Well, I see myself as one too. This is how I fight." --progress_bar True --use_cuda True --speaker_idx p330
 ```
 
+The VITS models take about twice as long to run, but the output is much better.  This seems to be a good tradeoff for real-time speech.
+
 Here's the output:
 
 {{< rawhtml >}}
