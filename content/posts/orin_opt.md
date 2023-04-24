@@ -140,11 +140,26 @@ python3 -m pip install --no-cache $TORCH_INSTALL
 
 There are some warnings but it completes and gets you a copy of PyTorch 2.0 installed.
 
+## Notes About TensorRT
+
+On the Jetson platform, the only way to get full performance for AI acceleration is by using the TensorRT API.  This was verified with benchmarks here: https://www.nebuly.com/blog/pytorch-2-0-inference-performance
+
+![TensorRT Benchmark](why_trt.png)
+
+Note that 8-bit performance is much higher than FP16 as there is dedicated INT8 Deep Learning Accelerator hardware on the Jetson platform.  So quantized models are going to perform the best.
+
+
 ## Setting up HuggingFace Optimum
 
 We will want to get Optimum installed on both devices, which as mentioned earlier is useful for optimizing models to run as fast as possible on the Jetson Orin platform.
 
 Optimum is based on the ONNX runtime, so we'll need to install that first.
+
+Some dependencies to install:
+
+```bash
+sudo apt install cuda
+```
 
 The documentation for installing ONNX runtime: https://onnxruntime.ai/docs/build/eps.html#nvidia-jetson-tx1tx2nanoxavier
 
@@ -187,18 +202,9 @@ After the build completes:
 catid@orin:~/sources/onnxruntime$ find . -iname \*.whl
 ./build/Linux/Release/dist/onnxruntime_gpu-1.14.1-cp38-cp38-linux_aarch64.whl
 
-catid@orin:~/sources/onnxruntime$ python3 -m pip install ./build/Linux/Release/dist/onnxruntime_gpu-1.14.1-cp38-cp38-linux_aarch64.whl
-Defaulting to user installation because normal site-packages is not writeable
-Processing ./build/Linux/Release/dist/onnxruntime_gpu-1.14.1-cp38-cp38-linux_aarch64.whl
-Requirement already satisfied: coloredlogs in /home/catid/.local/lib/python3.8/site-packages (from onnxruntime-gpu==1.14.1) (15.0.1)
-Requirement already satisfied: flatbuffers in /home/catid/.local/lib/python3.8/site-packages (from onnxruntime-gpu==1.14.1) (23.3.3)
-Requirement already satisfied: numpy>=1.23.1 in /home/catid/.local/lib/python3.8/site-packages (from onnxruntime-gpu==1.14.1) (1.23.1)
-Requirement already satisfied: packaging in /home/catid/.local/lib/python3.8/site-packages (from onnxruntime-gpu==1.14.1) (23.1)
-Requirement already satisfied: protobuf in /home/catid/.local/lib/python3.8/site-packages (from onnxruntime-gpu==1.14.1) (3.20.2)
-Requirement already satisfied: sympy in /home/catid/.local/lib/python3.8/site-packages (from onnxruntime-gpu==1.14.1) (1.11.1)
-Requirement already satisfied: humanfriendly>=9.1 in /home/catid/.local/lib/python3.8/site-packages (from coloredlogs->onnxruntime-gpu==1.14.1) (10.0)
-Requirement already satisfied: mpmath>=0.19 in /home/catid/.local/lib/python3.8/site-packages (from sympy->onnxruntime-gpu==1.14.1) (1.3.0)
-Installing collected packages: onnxruntime-gpu
+catid@orin:~/sources/onnxruntime$ python3 -m pip install --force-reinstall ./build/Linux/Release/dist/onnxruntime_gpu-1.14.1-cp38-cp38-linux_aarch64.whl
+
+...
 Successfully installed onnxruntime-gpu-1.14.1
 ```
 
@@ -215,7 +221,7 @@ The documentation for Optimum is here: https://github.com/huggingface/optimum
 The latest code fixes some bugs:
 
 ```bash
-python3 -m pip install git+https://github.com/huggingface/optimum.git#egg=optimum[onnxruntime-gpu]
+python3 -m pip install --force-reinstall git+https://github.com/huggingface/optimum.git#egg=optimum[onnxruntime-gpu]
 ```
 
 Upgrade two packages to resolve some errors that I encountered:
