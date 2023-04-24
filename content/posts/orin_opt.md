@@ -1,8 +1,8 @@
 +++
-title = "Jetson Orin"
+title = "AI on Jetson Orin"
 date = "2023-04-23"
 cover = "posts/orin_opt/orin_opt.jpg"
-description = "ONNX Model Optimization"
+description = "How to get the best performance on the Jetson Orin platform for AI"
 +++
 
 ## Jetson Orin
