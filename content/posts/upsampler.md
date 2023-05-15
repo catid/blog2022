@@ -65,6 +65,7 @@ Each of the servers is on a dedicated 20A circuit in the garage with a 1800W lin
 
 For testing OpenVINO and for administering the cluster, I also set up an Intel NUC 12 Pro.
 
+
 ## Configuration with Ansible
 
 Setting up and administering the servers was a project as well.
@@ -78,6 +79,7 @@ I shared my Ansible scripts here: https://github.com/catid/ansible  To use it, y
 Each server is configured with the latest CUDA drivers, conda, tmux config, ZSH, NFS mounts for accessing data on my NAS, compressed 256GB swap file (for playing with large language models), and of course the code for the super-resolution model.
 
 To monitor each server, I use tmux with panes for htop and nvidia-smi.  In the past I've used more complex network-based system monitoring but it's really overkill for a small cluster like this and tends to be kind of heavy.  I'm also not using slurm or any GPU resource allocation stuff like that since it's just me using the servers.
+
 
 ## Software
 
@@ -129,6 +131,7 @@ For data loading I'm using the Nvidia DALI library, which is a fast framework fo
 
 I think I saw that my training scripts had some issues when the batch size is not a power of two, so to keep things simple I'd recommend using a number like 32 or 64 for batch size.  The difference in training speed between a batch size of 16 and 32 is actually not that much, so just rounding to the nearest power of two that will fit in VRAM is fine and any bugs can be ignored.  It might be a bug in DeepSpeed also not sure to be honest.
 
+
 ## Datasets and Data Loading
 
 Initially I was planning to use a huge amount of data for training, but I found pretty quickly that about 20K 512x512 images are sufficient for upsampling models.  Probably not even that many are needed.  There are some high quality datasets already available that are commonly used in super-resolution research such as DIV2K and Flickr2K used by the VapSR researchers.  I put all the datasets up on Google Drive and where I found them: https://drive.google.com/drive/folders/1kILRdaxD2o273E2NnrXzhaLbQCXDxz9l  The code for this project also includes scripts for working with ImageNet data, and ripping datasets from 4K Blu-Ray discs, but it turned out to not be necessary.
@@ -145,6 +148,33 @@ I also tried JPEG-2000 (also supported by DALI) and WebP, but found that both op
 
 I tried varying the colorspace of the data as well, trying RGB (typical), YUV, and OKLAB.  The idea was to make the input data easier for the model to work on.  OKLAB, for example, was designed for use in image resamplers since averaging pixels together does not cause the brightness of the pixels to change incorrectly.  However, I found that converting the data to OKLAB or YUV inside the network, and then converting back to RGB at the end caused a significant loss in quality.  So, I ended up sticking with RGB.  My theory is that if the data itself was in OKLAB or YUV format then there would be some advantage.  However since I'm trying to work towards real-time video upsampling, adding extra image processing operations is probably a bad idea for performance reasons.  Also, video is in YUV format already, so no conversion will be needed - Instead the model would be trained on images in YUV colorspace.
 
+Since I'm not trying to win benchmarks, I'm using 1% of the dataset as a validation set to monitor the training progress, so for 20K images that works out to about 200 images.  Usually researchers keep these separate to maximize their benchmark scores, but it's not useful in practice, and just selecting training/validation images randomly from the same set is fine.  I didn't mix in any test images into the training set for fair comparison however.  I wouldn't use a much smaller validation set than this, since the loss seems much noisier than on the training set.  If I had more time I'd probably try adding more training data and use more like 500 images for validation just to eliminate the noise a bit more.
+
+
+## Data Augmentation
+
+The validation images need to be the same for each epoch so that I can directly compare the loss for each epoch.  However for the training data I'm applying data augmentation in the DALI data loader using random crops, random horizontal flips, and random 90 degree rotations.  These are all operations that do not mix data between pixels.
+
+Through progressively adding more augmentations to the data, I've found that the network learns better the more that are applied.  When I first added random horizontal flips I noticed improvements in quality early on, and later I quantified that adding random rotations added 0.15 dB PSNR, which is a huge jump in quality.
+
+WIP: I'm currently using 256x256 crops, which are a bit large.  Using smaller 128x128 crops and larger batch sizes seems like it might do better based on my intuition, so that it's less likely that the training script will see the same image data consistently in every epoch, and each batch may be more representative of the entire dataset.  This is training right now so I'll update this blog post once it's done, with the results.
+
+
+## Choice of Downsampling Function
+
+There are three major choices for downsampling images as input to this model:
+
+* Bicubic downsampling.
+* Gaussian downsampling.
+* Jointly learned downsampling.
+
+Of all the traditional image processing kernels for downsampling-then-upsampling, bicubic performs the best in my own prior evaluation.  I implemented and benchmarked Lanczos, Mitchell, Hermite, Cubic Spline, Sinc, and other cubic kernels at Anduril using Halide-Lang and found that the best option depends on the operation, but for 2x or 4x downsampling followed by 2x or 4x upsampling, bicubic preserved the most information in the original image.  Also I'm seeing all the super-resolution papers use this function.
+
+Gaussian downsampling I did not test actually, but I've used that for producing image pyramids for frame-to-frame alignment for video stabilization.  Since it tends to produce sharper images than bicubic, the model would need to be trained on this type of downsampler to be able to work with it.  In practice, it might work better overall than bicubic, but I haven't trained my model using this type of data.  Mainly because it was outside the scope of my project, and it required more work to implement in the data loader.  However, I do recall one paper that compared bicubic and Gaussian downsampling and found that Gaussian downsampling performed very slightly better when used with a learned upsampler, so probably it's a good idea.
+
+Jointly learned downsampling is the best option by far.  I didn't implement this because it's a lot more work, but I've seen 3 different papers that independently reproduced a 3dB improvement in upsampler performance over bicubic downsampling, so it's almost certainly worth doing for a practical application.  These results have given me the intuition that it's well worth doing at least some work on the encoder side as well.
+
+
 ## Normalization and Layout
 
 The input and output images are fairly convenient to be processed by CPU in 8-bit RGB or YUV format, so it seems fine to use a different layout for the network.  For training, I used the NCHW layout that seems to be preferred by all GPU codebases for performance.  I'm aware that CPU inference tends to prefer NHWC layout for cache locality, which is what I'm familiar with for image processing kernels.  I decided not to do any layout changes inside the network, and rely on the code running inference to do layout conversion.
@@ -156,6 +186,7 @@ However, I think that normalization has some advantages when done inside the mod
 My understanding is that data within the model should generally be normalized and range from -1 to 1, so that's how the RGB channels are normalized going into the network.  As far as I know, using 0..1 is just as good for training but I haven't checked if it has any effect.  Personally I think the ImageNet normalization factors should be considered harmful, since they add unnecessary complexity.  I suspect they do not change the performance of the network.
 
 One place where normalization does matter is in calculating PSNR, SSIM, and LPIPS scores for the test set.  This is done in `evaluate.py` in my project.  It's important to carefully set up the data normalization and the calculations to be compatible.  For example, PSNR and SSIM are usually calculated on data normalized from 0..1 instead of -1..1.
+
 
 ## Training
 
@@ -169,11 +200,13 @@ Thanks to all the hardware and optimizations discussed above, I'm able to fully 
 
 The code is all fairly well documented here: https://github.com/catid/upsampling - The README describes how to reproduce my results.
 
+
 ## Inference
 
 Inference using PyTorch is fairly straight-forward and there's an example in the `evaluate.py` script, but I'm more interested in getting the best performance possible out of the Intel GPU just using the lower-level Intel APIs.  So in addition, I learned how to set up and use OpenVINO.  I wrote a bunch of documentation for this in the `openvino` directory here: https://github.com/catid/upsampling/tree/master/openvino
 
 ![OpenVINO](openvino.png)
+
 
 ## Results
 
