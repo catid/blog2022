@@ -67,7 +67,7 @@ Setting up and administering the servers was a project as well.
 
 After building the computers, I upgraded the BIOS on each machine and configured their fans to run at max speed all the time, and to boot as soon as power is applied.
 
-For operating system, I am partial to running Ubuntu Linux Server 22.10, which has a much nicer install process than desktop Ubuntu, and better defaults.  During the OS install process, I set up the first SSD as an ext4 root parition and boot drive, and the other 3 SSDs as an LVG group formatted as XFS and mounted at /home.  All other configuration is performed via Ansible.  Using the Ansible playbooks that I had ChatGPT-4 write for me, I am now able to configure all 4 servers in about 30 minutes from scratch.
+For operating system, I am partial to running Ubuntu Linux Server 22.10, which has a much nicer install process than desktop Ubuntu, and better defaults.  During the OS install process, I set up the first SSD as an ext4 root partition and boot drive, and the other 3 SSDs as an LVG group formatted as XFS and mounted at /home.  All other configuration is performed via Ansible.  Using the Ansible playbooks that I had ChatGPT-4 write for me, I am now able to configure all 4 servers in about 30 minutes from scratch.
 
 I shared my Ansible scripts here: https://github.com/catid/ansible  To use it, you'd just need to edit the inventory.ini file to match your network and the `update_dataset.sh` script to pick which server has the master copy of the dataset.
 
