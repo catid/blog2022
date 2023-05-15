@@ -24,7 +24,7 @@ In the machine learning literature, these are called super-resolution models.  S
 
 Top-Left: Original Image.  Top-Right: My model output.
 
-![Side-By-Side Example](sbs.png)
+![Side-By-Side Example](sbs4.png)
 
 Bottom-Left: Input Image.  Bottom-Right: Baseline Bicubic upsampler.
 
