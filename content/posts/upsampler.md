@@ -21,9 +21,11 @@ In the machine learning literature, these are called super-resolution models.  S
 
 Example of upsampling:
 
+Top-Left: Original Image.  Top-Right: My model output.
+
 ![Side-By-Side Example](sbs.png)
 
-Left: Original Image.  Second: My model output.  Third: Bicubic upsampler.  Right: Input image.
+Bottom-Left: Input Image.  Bottom-Right: Baseline Bicubic upsampler.
 
 My model output is significantly better than the bicubic upsampler, such as the one used in the LCEVC codec, so imagine if we could get these sorts of results in a video codec!
 
