@@ -159,6 +159,7 @@ Some dependencies to install:
 
 ```bash
 sudo apt install cuda
+python3 -m pip install --upgrade protobuf==3.20.2
 ```
 
 The documentation for installing ONNX runtime: https://onnxruntime.ai/docs/build/eps.html#nvidia-jetson-tx1tx2nanoxavier
