@@ -19,7 +19,8 @@ Inspired by the author of Tortoise-TTS who built his own machine learning super-
 
 In the machine learning literature, these are called super-resolution models.  Since they are well-studied, there are many open-source implementations available.  I've been using the VapSR model ( https://github.com/zhoumumu/VapSR ) so far, since it is unusually small and fast for the excellent quality of its results.
 
-Example of upsampling:
+
+## Example
 
 Top-Left: Original Image.  Top-Right: My model output.
 
@@ -35,6 +36,7 @@ I've released code to get this model to run on Intel GPUs using OpenVINO, which 
 
 At this point I have reached a good first milestone where I was able to train a VapSR model on my own hardware and then deploy it to run with OpenVINO.  So, I'm going to share my experience here to help others who are interested in doing the same.
 
+
 ## Hardware
 
 I decided to build my own machine learning training super computer cluster at home.  I've noticed that people tend to prefer self-hosting over cloud services for training super-resolution models based on the papers I've been reading.  So the only question was how much to spend on hardware and what type of computer to build.  Since the models are small, training scales well with a cluster of computers - Each computer handles a part of the dataset and they run mostly in parallel.
@@ -45,9 +47,9 @@ Most people use 1-2 RTX 3090 cards to train their models, so my cluster of 8x RT
 
 There are three references that pushed me in the direction of using RTX 4090 GPUs for training.
 
-(1) Lambda Labs reports that RTX 4090 has the best performance/$: https://lambdalabs.com/blog/nvidia-rtx-4090-vs-rtx-3090-deep-learning-benchmark
-(2) Tim Dettmers has a lengthy article showing that the RTX 4090 is second only to the H100 for training performance: https://timdettmers.com/2023/01/30/which-gpu-for-deep-learning/
-(3) Also mentioned in the Tortois-TTS blog "A lesser-known fact about 3090s is they actually pull burst currents of up to 600W."  I've seen this myself from previous system builds.
+* Lambda Labs reports that RTX 4090 has the best performance/$: https://lambdalabs.com/blog/nvidia-rtx-4090-vs-rtx-3090-deep-learning-benchmark
+* Tim Dettmers has a lengthy article showing that the RTX 4090 is second only to the H100 for training performance: https://timdettmers.com/2023/01/30/which-gpu-for-deep-learning/
+* Also mentioned in the Tortois-TTS blog "A lesser-known fact about 3090s is they actually pull burst currents of up to 600W."  I've seen this myself from previous system builds.
 
 Note that these references mostly consider FP16 training, which I found works almost as well as FP32 training for super-resolution model training (within 0.01 dB PSNR), but trains 33% faster.  Also note that RTX 4090 cards do not have NVLink, but this is not needed for anything I'm interested in doing.
 
