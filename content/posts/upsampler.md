@@ -149,7 +149,9 @@ For the uninitiated, NCHW means N=batch of images, C=color channel, H=height, W=
 
 However, I think that normalization has some advantages when done inside the model so that it can be done with FP16 precision using tensor cores.  So I took the somewhat unusual step to do normalization from 0..255 uint8 RGB input to -1..1 FP16 RGB input inside the network, and to convert back to 0..255 uint8 RGB output at the end.  For example when the network is run in OpenVINO, the normalization preprocessing is done on CPU which does not support FP16.  This means that the network does slightly different things during training and during inference, but I think it's a reasonable tradeoff.  This simplifies the data loader since it does not need to care about normalization stuff.  The main wart is that it does make the loss function more complicated since it needs to normalize the target images to compare to the output of the model during training.  This does not affect training speed, however.
 
-My understanding is that data within the model should generally be normalized and range from -1 to 1, so that's how the RGB channels are normalized going into the network.  As far as I know, using 0..1 is just as good for training but I haven't checked if it has any effect.
+My understanding is that data within the model should generally be normalized and range from -1 to 1, so that's how the RGB channels are normalized going into the network.  As far as I know, using 0..1 is just as good for training but I haven't checked if it has any effect.  Personally I think the ImageNet normalization factors should be considered harmful, since they add unnecessary complexity.  I suspect they do not change the performance of the network.
+
+One place where normalization does matter is in calculating PSNR, SSIM, and LPIPS scores for the test set.  This is done in `evaluate.py` in my project.  It's important to carefully set up the data normalization and the calculations to be compatible.  For example, PSNR and SSIM are usually calculated on data normalized from 0..1 instead of -1..1.
 
 ## Training
 
