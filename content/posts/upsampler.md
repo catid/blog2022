@@ -157,7 +157,7 @@ The validation images need to be the same for each epoch so that I can directly 
 
 Through progressively adding more augmentations to the data, I've found that the network learns better the more that are applied.  When I first added random horizontal flips I noticed improvements in quality early on, and later I quantified that adding random rotations added 0.15 dB PSNR, which is a huge jump in quality.
 
-WIP: I'm currently using 256x256 crops, which are a bit large.  Using smaller 128x128 crops and larger batch sizes seems like it might do better based on my intuition, so that it's less likely that the training script will see the same image data consistently in every epoch, and each batch may be more representative of the entire dataset.  This is training right now so I'll update this blog post once it's done, with the results.
+I tried using smaller 128x128 crops instead of 256x256 crops and using a 4x larger batch size, with the intuition that it might lead to better generalization.  The results were not as good, about 0.03 dB worse.
 
 
 ## Choice of Downsampling Function
