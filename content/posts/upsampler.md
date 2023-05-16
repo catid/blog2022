@@ -110,7 +110,7 @@ def is_main_process():
     return comm.get_rank() == 0
 ```
 
-The `log_0` function only logs from the rank=0 (primary) machine.  And `log_all` will log from all the machines.  Other logging methods like print() or the logging subsystem will end up being jumbled or not printing.  The `is_main_process` function allows the code to do some calculations only on the primary machine's main process.  Note that DeepSpeed uses multiple processes per machine so it can get complicated unless you work within the framework.
+The `log_0` function only logs from the rank=0 (primary) script process.  And `log_all` will log from all the instances.  Other logging methods like print() or the logging subsystem will end up being jumbled or not printing.  The `is_main_process` function allows the code to do some calculations only on the primary machine's main process.  Note that DeepSpeed uses multiple processes per machine so it can get complicated unless you work within the framework.
 
 I started integrating Microsoft NNI, which allows you to automate architecture search for neural networks, but haven't had a chance to experiment with it yet.  It seems like it might be useful for finding the best architecture for super-resolution, or NeRF, or some other projects I'm interested in.
 
