@@ -13,7 +13,7 @@ However "fast" is relative to where it's running.  On a normal laptop without a 
 
 So, instead of using a VapSR network, I looked at the NTIRE 2023 RTSR competition to find a new network design to try.  The fastest network is the Bicubic++ model ( https://arxiv.org/pdf/2305.02126.pdf ).  There is no code available for this network, so I had to implement it myself.
 
-Somewhat arbitrarily, I decided to design the highest quality super-resolution model that can 960x540->1920x1080 at 60 FPS on the Intel Iris Xe Graphics G7 96EUs at 1400 MHz.  This means that probably even the Intel UHD 620 GPU can run at 30 FPS.  These results seem like they could be useful for practical real-time applications.
+Somewhat arbitrarily, I decided to design the highest quality super-resolution model that can upsample 960x540->1920x1080 at 60 FPS on the Intel Iris Xe Graphics G7 96EUs at 1400 MHz.  This means that probably even the Intel UHD 620 GPU can run at 30 FPS.  These results seem like they could be useful for practical real-time applications.
 
 The code for my model is at https://github.com/catid/upsampling in the `tiny` branch: https://github.com/catid/upsampling/blob/tiny/tiny_net.py
 
@@ -39,7 +39,7 @@ One optimization that's common is replacing expensive full `conv2d 3x3` with a s
 
 After training and conversion to ONNX, using Netron to visualize the model was very helpful to verify that it was doing what I expected.  Furthermore, `openvino-workbench` has a model visualizer for the `.bin/.xml` OpenVINO IR model, which is useful to check what operations might need to be improved for performance.
 
-For example, I found that the bias terms in `conv2d` layers was creating a separate `add` operation in the OpenVINO IR model which lead to poor cache usage and a big performance hit.  Removing the bias terms also just happens to improve performance of the model, so it's a win-win.
+For example, I found that the bias terms in `conv2d` layers was creating a separate `add` operation in the OpenVINO IR model which led to poor cache usage and a big performance hit.  Removing the bias terms also just happens to improve performance of the model, so it's a win-win.
 
 Implementing a space-to-depth operation in PyTorch does not convert well to OpenVINO:
 
