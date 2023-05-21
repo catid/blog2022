@@ -87,7 +87,7 @@ The main part of the network looks like a single residual block with two separab
 
 In my variations of Bicubic++ I concatenate the residual block with the skip connection and perform a 1x1 convolution to mix them.  I've seen this sort of concatenated mixing in other super-resolution network designs from the NTIRE competition.  The output of this deserves a ReLU before going into the next convolution.  I found these extra parameters help the network learn more interesting features.  It sort of looks like an attention network used by VapSR, since the residual block has a larger receptive field than the initial 3x3 features and it has the chance to gate the skip connection, but it could also learn other types of mixing so it seems very expressive for just a little extra cost.  Since it's replacing an `add` layer at quarter resolution in the OpenVINO graph, the performance hit from a heavier operation is somewhat offset and only adds about 1 millisecond to the inference time.
 
-The final part of the network is a 4x upsampler, which converts 32 channels at quarter resolution to 16 channels at half resolution.  And then from 16 channels at half resolution to 12 channels at full resolution.  The final `Mul/Add/Clip/Cast` are de-normalization and conversion to 8-bit RGB in NCHW layout.
+The final part of the network is a 4x upsampler, which converts 32 channels at quarter resolution to 16 channels at half resolution.  And then from 16 channels at half resolution to 3 channels at full resolution.  The final `Mul/Add/Clip/Cast` are de-normalization and conversion to 8-bit RGB in NCHW layout.
 
 
 ## Future Work
