@@ -35,7 +35,7 @@ BatchNorms, biases and other such tools to train deeper networks are not necessa
 
 Using ReLU instead of GELU or LReLU activation is a good idea for tiny models since ReLU is implemented with `max(x, 0)` that is very fast on all targets.  Adding a ReLU operation uses almost no additional time in my testing, so it's a good idea to use as many as possible so the model can learn more complex functions.  For example, I added a ReLU that was not present in the Bicubic++ model to improve quality.
 
-One optimization that's common is replacing expensive full `conv2d 3x3` with a separable convolution that first acts on the each channel separately with a depth-wise `conv2d 3x3`, followed by a point-wise `conv2d 1x1`.  I found that this reduces quality imperceptibly, but greatly reduces the number of parameters.  OpenVINO does not reward us with faster execution time however, and in fact runs slightly slower.  I'm gaining the intuition that number of layers is more important than number of paramters for OpenVINO perhaps due to slow memory access time between layers.  However, I feel like the reduced number of parameters was an improvement overall.
+One optimization that's common is replacing expensive full `conv2d 3x3` with a separable convolution that first acts on the each channel separately with a depth-wise `conv2d 3x3`, followed by a point-wise `conv2d 1x1`.  I found that this reduces quality imperceptibly, but greatly reduces the number of parameters.  OpenVINO does not reward us with faster execution time however, and in fact runs slightly slower.  I'm gaining the intuition that number of layers is more important than number of parameters for OpenVINO perhaps due to slow memory access time between layers.  However, I feel like the reduced number of parameters was an improvement overall.
 
 After training and conversion to ONNX, using Netron to visualize the model was very helpful to verify that it was doing what I expected.  Furthermore, `openvino-workbench` has a model visualizer for the `.bin/.xml` OpenVINO IR model, which is useful to check what operations might need to be improved for performance.
 
@@ -61,7 +61,7 @@ It was trained over 14 hours (about 25K epochs) on the same cluster of 8x RTX409
 
 ## Tiny Super-Resolution Model
 
-Mode shape and parameter count is pretty similar to other tiny super-resolution models:
+Model shape and parameter count is pretty similar to other tiny super-resolution models:
 
 ```
 Name: conv1.0.weight, Type: torch.float16, Size: torch.Size([32, 12, 3, 3])
