@@ -43,7 +43,7 @@ For example, I found that the bias terms in `conv2d` layers was creating a separ
 
 Implementing a space-to-depth operation in PyTorch does not convert well to OpenVINO:
 
-![OpenVINO Mess](cluster.jpg)
+![OpenVINO Mess](openvino_mess.png)
 
 This space-to-depth operation is an important performance feature of the Bicubic++ model.  What makes the Bicubic++ model special is that it immediately downsamples the - already downsampled - input image by 2x, so that the body of the network runs significantly faster than alternative designs.  So, this space-to-depth operation needed to be improved.
 
