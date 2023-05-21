@@ -75,6 +75,14 @@ Name: d2s.3.weight, Type: torch.float16, Size: torch.Size([12, 16, 3, 3])
 Total number of parameters: 28288
 ```
 
+On the Urban100 test set, it achieves 1.6567 dB higher PSNR than bicubic, and 3.7x lower LPIPS (human perception) loss.  So, perceptually it's much better.
+
+```
+2023-05-21 15:08:43,092 [INFO] Model PSNR: 26.528595651893383 - Bicubic PSNR: 24.87192185623686
+2023-05-21 15:08:43,092 [INFO] Model SSIM: 0.8696009637066227 - Bicubic SSIM: 0.8233347716777945
+2023-05-21 15:08:43,092 [INFO] Model LPIPS: 0.0003620095800166333 - Bicubic LPIPS: 0.0013645301913965267
+```
+
 With a batch size of 1 image, OpenVINO inference processes images from 960x540 -> 1920x1080 in 15.461 milliseconds per frame, which is faster than 60 FPS.  I was testing with Python so with a good C++ framework this would be faster.  Also it's using RGB input, so it's not quite representative of real-world performance where YUV 4:2:0 would be used and you'd expect faster speed and higher quality.
 
 This super-resolution model is small enough that it can be visualized in a single image.  The OpenVINO IR model graph is on the left, and the input ONNX graph is on the right.  Notice how they are identical since the model has been designed to avoid any extra operations when converting to OpenVINO IR.
