@@ -100,7 +100,7 @@ The final part of the network is a 4x upsampler, which converts 32 channels at q
 
 ## Variations of Bicubic Downsampling-then-Upsampling
 
-I'm comparing using the same set of cropped Urban100 images used to evaluate my model, with the `image_folder_compare.py` from my repo.  Note that I'm using FP32 for calculating LPIPS here so the LPIPS results are a slightly different than above but not qualitatively (usually more favorable not less).
+I'm comparing using the same set of cropped Urban100 images used to evaluate my model, with the `image_folder_compare.py` from my repo.
 
 ```
 Using ImageMagick for downsampling, ImageMagick for upsampling:
