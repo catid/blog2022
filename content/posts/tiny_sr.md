@@ -162,7 +162,7 @@ In general the conclusion here is that a learned upsampler is significantly bett
 
 Nvidia has an upsampling SDK that is released here: https://github.com/NVIDIAGameWorks/NVIDIAImageScaling
 
-It compiles cleanly with Visual Studio 2022 on Windows.  If you build the DX12 sample, add images under `NVIDIAImageScaling\samples\bin\DX12\media\images`, run the same, and then select 50% scale and one of the images from the drop-down, you can press the S key to have it save the image to `NVIDIAImageScaling\samples\bin\DX12\dump.png`.
+It compiles cleanly with Visual Studio 2022 on Windows.  If you build the DX12 sample, add images under `NVIDIAImageScaling\samples\bin\DX12\media\images`, run the DX12 sample application, and then select 50% scale and one of the images from the drop-down, you can press the S key to have it save the image to `NVIDIAImageScaling\samples\bin\DX12\dump.png`.
 
 Since it is laborous to run it on every single image in the test set, I instead just compare 10 representative images from the set, which are the 10 I've most looked at over the past few weeks:
 
