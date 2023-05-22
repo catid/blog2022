@@ -158,6 +158,50 @@ These results are not surprising for me, since I've already compared some of the
 In general the conclusion here is that a learned upsampler is significantly better than any of these traditional approaches.
 
 
+## Comparison to Nvidia Upsampling SDK
+
+Nvidia has an upsampling SDK that is released here: https://github.com/NVIDIAGameWorks/NVIDIAImageScaling
+
+It compiles cleanly with Visual Studio 2022 on Windows.  If you build the DX12 sample, add images under `NVIDIAImageScaling\samples\bin\DX12\media\images`, run the same, and then select 50% scale and one of the images from the drop-down, you can press the S key to have it save the image to `NVIDIAImageScaling\samples\bin\DX12\dump.png`.
+
+Since it is laborous to run it on every single image in the test set, I instead just compare 10 representative images from the set, which are the 10 I've most looked at over the past few weeks:
+
+```
+frame_img_001_SRF_4_HR_scale1_part0.png
+frame_img_003_SRF_4_HR_scale1_part0.png
+frame_img_007_SRF_4_HR_scale1_part0.png
+frame_img_008_SRF_4_HR_scale1_part0.png
+frame_img_017_SRF_4_HR_scale1_part0.png
+frame_img_020_SRF_4_HR_scale1_part1.png
+frame_img_024_SRF_4_HR_scale1_part0.png
+frame_img_037_SRF_4_HR_scale1_part0.png
+frame_img_098_SRF_4_HR_scale1_part0.png
+frame_img_100_SRF_4_HR_scale1_part0.png
+```
+
+The results are very poor:
+
+```
+Nvidia Upsampling SDK:
+Mean PSNR: 21.493067573018024 SSIM: 0.7309025526046753 LPIPS: 0.0011881895319675096
+```
+
+```
+Model evaluation on just these 10 images:
+2023-05-22 20:34:18,117 [INFO] Model PSNR: 25.110283076710758 - Bicubic PSNR: 23.65697940868438
+2023-05-22 20:34:18,117 [INFO] Model SSIM: 0.8417805168194482 - Bicubic SSIM: 0.7870789210851086
+2023-05-22 20:34:18,117 [INFO] Model LPIPS: 0.000343972205882892 - Bicubic LPIPS: 0.001076263100549113
+```
+
+So, bicubic looks generally more accurate than Nvidia Upsampling SDK on photographic imagery.  Meanwhile, the learned upsampler improves on accuracy by +1.45 dB PSNR, and about 3x better LPIPS perceptual score.  Bicubic does tend to blur the images a bit more, so I suppose that players would prefer artifically sharpened frames in gaming.
+
+Basically people like a bit of "sharpening" in their images even if it's not representative of the original image.  Honestly I do too, since I prefer "enhanced" mode to "film-maker" mode on my TV.  This does make the Nvidia Upsampling SDK a good option for enjoyment of game content, but not for use in a photographic video pipeline.
+
+AMD FSR 1 is considered to be similar in quality to Nvidia Upsampling SDK based on gamer reviews.  I built the samples for it with Visual Studio and did not find a way to import/export PNG images to perform a comparison, so I cannot dispute the community consensus.
+
+AMD FSR 2 and Nvidia DLSS lean heavily into motion estimation and other video techniques that are not applicable to still images, so I did not consider them here.  I believe the machine learning used in these solutions is tuned for specific games, which would make these not applicable to video.
+
+
 ## Future Work
 
 When working on YUV 4:2:0 images (like JPEG etc), the colorspace is YCbCr instead of RGB.  DALI supports this conversion so it's fairly simple to experiment with.  More importantly, the UV channels are at half resolution, so the model needs to be improved to accept UV channels as a separate input.  These channels do not need to be downsampled at the start of the network, and do not need as much work to reconstruct at the output.  This should lead to a significant improvement in quality and speed once the model is converted to use this smaller input.  I've seen two papers where YUV 4:4:4 colorspace led to better quality super-resolution results than RGB.
