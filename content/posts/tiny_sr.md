@@ -98,6 +98,66 @@ In my variations of Bicubic++ I concatenate the residual block with the skip con
 The final part of the network is a 4x upsampler, which converts 32 channels at quarter resolution to 16 channels at half resolution.  And then from 16 channels at half resolution to 3 channels at full resolution.  The final `Mul/Add/Clip/Cast` are de-normalization and conversion to 8-bit RGB in NCHW layout.
 
 
+## Variations of Bicubic Downsampling-then-Upsampling
+
+I'm comparing using the same set of cropped Urban100 images used to evaluate my model, with the `image_folder_compare.py` from my repo.  Note that I'm using FP32 for calculating LPIPS here so the LPIPS results are a slightly different than above but not qualitatively (usually more favorable not less).
+
+```
+Using ImageMagick for downsampling, ImageMagick for upsampling:
+* convert "$image" -resize 50% -filter Cubic PNG32:"$output_image"
+* convert "$image" -resize 200% -filter Cubic PNG32:"$output_image"
+Mean PSNR: 24.621472693908935 SSIM: 0.8136691451072693 LPIPS: 0.0015053656451699852
+
+Using PIL for downsampling, PIL for upsampling.  This is what is used for my model:
+Mean PSNR: 24.8788588684606 SSIM: 0.8237610459327698 LPIPS: 0.0013115047611889266
+
+Using ImageMagick for downsampling, PIL for upsampling:
+Mean PSNR: 25.165479554756793 SSIM: 0.8333361744880676 LPIPS: 0.0010422282023494329
+```
+
+Strangely ImageMagick has the best downsampling implementation, and PIL has the best upsampler.  The model is trained on PIL downsampling so we use that for the rest of the comparisons.  The choice of downsampler is very important, and it motivates learning a better downsampler for future work.  I compared the round trips and the differences are around image features not at the borders, so it actually does seem to be a better kernel being used by ImageMagick.
+
+
+## Comparisons with Magic Kernel
+
+In addition to bicubic, we should probably also compare to other fast image processing algorithms, starting with John Costella's Magic Kernel ( https://johncostella.com/magic/ ).  Since his code also implements Lanczos resampling we also compare to his implementation of that ( https://en.wikipedia.org/wiki/Lanczos_resampling ).
+
+```
+Lanczos 2:
+Using ./build/opt/bin/resize_image -k 2 -m LANCZOS -a 2 -p "$image" "$output_image"
+Mean PSNR: 24.545236070267055 SSIM: 0.8192198872566223 LPIPS: 0.001238669355672329
+```
+
+```
+Lanczos 3:
+Using ./build/opt/bin/resize_image -k 2 -m LANCZOS -a 3 -p "$image" "$output_image"
+Mean PSNR: 24.791738948832595 SSIM: 0.8266182541847229 LPIPS: 0.0008635188044593691
+```
+
+```
+Magic Kernel:
+Using ./build/opt/bin/resize_image -k 2 -m MAGIC_KERNEL -p "$image" "$output_image"
+Mean PSNR: 23.044779662495284 SSIM: 0.756813108921051 LPIPS: 0.0024101036172208107
+```
+
+```
+Magic Kernel Sharp:
+Using ./build/opt/bin/resize_image -k 2 -m MAGIC_KERNEL_SHARP -p "$image" "$output_image"
+Mean PSNR: 24.81309103889301 SSIM: 0.8279603719711304 LPIPS: 0.0009978463711557378
+```
+
+Honestly Magic Kernel looks broken somehow.  Its performance is significantly worse than other options.  I took image differences and did not see any problems at the image borders so it seems to be a problem with the kernel itself.
+
+```
+Bicubic (repeated from above for clarity):
+Mean PSNR: 24.8788588684606 SSIM: 0.8237610459327698 LPIPS: 0.0013115047611889266
+```
+
+These results are not surprising for me, since I've already compared some of these options like Lanczos and Bicubic at work considering PSNR, and Bicubic is usually the best option for 2x or 4x downsampling-then-upsampling.  However, we do see that perceptually, someone might slightly prefer Magic Kernel Sharp or Lanczos 3 over Bicubic, likely because they emphasize edges better, based on the LPIPS scores.
+
+In general the conclusion here is that a learned upsampler is significantly better than any of these traditional approaches.
+
+
 ## Future Work
 
 When working on YUV 4:2:0 images (like JPEG etc), the colorspace is YCbCr instead of RGB.  DALI supports this conversion so it's fairly simple to experiment with.  More importantly, the UV channels are at half resolution, so the model needs to be improved to accept UV channels as a separate input.  These channels do not need to be downsampled at the start of the network, and do not need as much work to reconstruct at the output.  This should lead to a significant improvement in quality and speed once the model is converted to use this smaller input.  I've seen two papers where YUV 4:4:4 colorspace led to better quality super-resolution results than RGB.
