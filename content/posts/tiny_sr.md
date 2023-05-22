@@ -33,7 +33,7 @@ If you compare this to the previous large network output, it looks about 2x wors
 
 BatchNorms, biases and other such tools to train deeper networks are not necessary for tiny models.  It's clear from existing literature that these operations are often harmful for quality at a given level of performance.
 
-Using ReLU instead of GELU or LReLU activation is a good idea for tiny models since ReLU is implemented with `max(x, 0)` that is very fast on all targets.  Adding a ReLU operation uses almost no additional time in my testing, so it's a good idea to use as many as possible so the model can learn more complex functions.  For example, I added a ReLU that was not present in the Bicubic++ model to improve quality.
+Using ReLU instead of GELU or LReLU activation is a good idea for tiny models since ReLU is implemented with `max(x, 0)` that is very fast on all targets.  Adding a ReLU operation uses almost no additional time in my testing, so it's a good idea to use as many as needed so the model can learn more complex functions.
 
 One optimization that's common is replacing expensive full `conv2d 3x3` with a separable convolution that first acts on the each channel separately with a depth-wise `conv2d 3x3`, followed by a point-wise `conv2d 1x1`.  I found that this reduces quality imperceptibly, but greatly reduces the number of parameters.  OpenVINO does not reward us with faster execution time however, and in fact runs slightly slower.  I'm gaining the intuition that number of layers is more important than number of parameters for OpenVINO perhaps due to slow memory access time between layers.  However, I feel like the reduced number of parameters was an improvement overall.
 
@@ -75,25 +75,25 @@ Name: d2s.3.weight, Type: torch.float16, Size: torch.Size([12, 16, 3, 3])
 Total number of parameters: 28288
 ```
 
-On the Urban100 test set, it achieves 1.6567 dB higher PSNR than bicubic, and 3.7x lower LPIPS (human perception) loss.  So, perceptually it's much better.
+On the Urban100 test set, it achieves 1.77 dB higher PSNR than bicubic, and 4x lower LPIPS (human perception) loss.  So, perceptually it's much better.
 
 ```
-2023-05-21 15:08:43,092 [INFO] Model PSNR: 26.528595651893383 - Bicubic PSNR: 24.87192185623686
-2023-05-21 15:08:43,092 [INFO] Model SSIM: 0.8696009637066227 - Bicubic SSIM: 0.8233347716777945
-2023-05-21 15:08:43,092 [INFO] Model LPIPS: 0.0003620095800166333 - Bicubic LPIPS: 0.0013645301913965267
+2023-05-22 05:05:56,515 [INFO] Model PSNR: 26.64236543476973 - Bicubic PSNR: 24.87192185623686
+2023-05-22 05:05:56,515 [INFO] Model SSIM: 0.8721492620995275 - Bicubic SSIM: 0.8233347716777945
+2023-05-22 05:05:56,515 [INFO] Model LPIPS: 0.0003359891505022313 - Bicubic LPIPS: 0.0013645301913965267
 ```
 
 With a batch size of 1 image, OpenVINO inference processes images from 960x540 -> 1920x1080 in 15.461 milliseconds per frame, which is faster than 60 FPS.  I was testing with Python so with a good C++ framework this would be faster.  Also it's using RGB input, so it's not quite representative of real-world performance where YUV 4:2:0 would be used and you'd expect faster speed and higher quality.
 
 This super-resolution model is small enough that it can be visualized in a single image.  The OpenVINO IR model graph is on the left, and the input ONNX graph is on the right.  Notice how they are identical since the model has been designed to avoid any extra operations when converting to OpenVINO IR.
 
-![Model](model_graph.png)
+![Model](model_graph2.png)
 
 The initial `Cast/Div/Sub` are normalization.  Then there's a 2x downsampling + feature extraction conversion from 2x2 3-channel RGB pixels (12 channels) to half-sized resolution tensors with 32 feature channels.
 
 The main part of the network looks like a single residual block with two separable convolutions separated by ReLU.  I went back to the original ResNet and Highway Networks papers to understand this design choice.  It turns out there are lots of minor variations that might work better.  One interesting variation for small networks is using a convolution to mix the skip connection with the main path, which performs better when networks are smaller based on these classic papers.
 
-In my variations of Bicubic++ I concatenate the residual block with the skip connection and perform a 1x1 convolution to mix them.  I've seen this sort of concatenated mixing in other super-resolution network designs from the NTIRE competition.  The output of this deserves a ReLU before going into the next convolution.  I found these extra parameters help the network learn more interesting features.  It sort of looks like an attention network used by VapSR, since the residual block has a larger receptive field than the initial 3x3 features and it has the chance to gate the skip connection, but it could also learn other types of mixing so it seems very expressive for just a little extra cost.  Since it's replacing an `add` layer at quarter resolution in the OpenVINO graph, the performance hit from a heavier operation is somewhat offset and only adds about 1 millisecond to the inference time.
+In my variations of Bicubic++ I concatenate the residual block with the skip connection and perform a 1x1 convolution to mix them.  I've seen this sort of concatenated mixing in other super-resolution network designs from the NTIRE competition.  I found these extra parameters help the network learn more interesting features.  It sort of looks like an attention network used by VapSR, since the residual block has a larger receptive field than the initial 3x3 features and it has the chance to gate the skip connection, but it could also learn other types of mixing so it seems very expressive for just a little extra cost.  Since it's replacing an `add` layer at quarter resolution in the OpenVINO graph, the performance hit from a heavier operation is somewhat offset and only adds about 1 millisecond to the inference time.  I tried adding a ReLU after the new mixing convolution, which reduced output quality by 0.1 dB PSNR.
 
 The final part of the network is a 4x upsampler, which converts 32 channels at quarter resolution to 16 channels at half resolution.  And then from 16 channels at half resolution to 3 channels at full resolution.  The final `Mul/Add/Clip/Cast` are de-normalization and conversion to 8-bit RGB in NCHW layout.
 
