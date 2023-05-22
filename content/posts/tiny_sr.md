@@ -199,7 +199,14 @@ Basically people like a bit of "sharpening" in their images even if it's not rep
 
 AMD FSR 1 is considered to be similar in quality to Nvidia Upsampling SDK based on gamer reviews.  I built the samples for it with Visual Studio and did not find a way to import/export PNG images to perform a comparison, so I cannot dispute the community consensus.
 
+
+## Learned Upsamplers for Gaming
+
 AMD FSR 2 and Nvidia DLSS lean heavily into motion estimation and other video techniques that are not applicable to still images, so I did not consider them here.  I believe the machine learning used in these solutions is tuned for specific games, which would make these not applicable to video.
+
+Note that Nvidia of course has experimented with AI upsamplers, achieving similar results to my model, stating 1-2 dB higher PSNR.  See the "AI SUPER REZ" section of this whitepaper: https://images.nvidia.com/aem-dam/en-zz/Solutions/design-visualization/technologies/turing-architecture/NVIDIA-Turing-Architecture-Whitepaper.pdf
+
+They do not state the size or speed of the model they evaluated, so it's hard to compare.  I believe that Nvidia and AMD should consider deeper networks.  My VapSR result is significantly higher than 1-2 dB PSNR, and it runs much faster than real-time on an RTX 4090, so it would be an improvement for video upsampling.  There are likely some intermediate-sized networks that would be a better tradeoff between quality and speed, traded against time spent rendering games.
 
 
 ## Future Work
