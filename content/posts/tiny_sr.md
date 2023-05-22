@@ -22,7 +22,7 @@ The code for my model is at https://github.com/catid/upsampling in the `tiny` br
 
 Top-Left: Original Image. Top-Right: Tiny model output.
 
-![Example](example.png)
+![Example](example2.png)
 
 Bottom-Left: Input Image. Bottom-Right: Baseline Bicubic upsampler.
 
@@ -75,12 +75,12 @@ Name: d2s.3.weight, Type: torch.float16, Size: torch.Size([12, 16, 3, 3])
 Total number of parameters: 28288
 ```
 
-On the Urban100 test set, it achieves 1.77 dB higher PSNR than bicubic, and 4x lower LPIPS (human perception) loss.  So, perceptually it's much better.
+On the Urban100 test set, it achieves 1.788 dB higher PSNR than bicubic, and 4x lower LPIPS (human perception) loss.  So, perceptually it's much better.
 
 ```
-2023-05-22 05:05:56,515 [INFO] Model PSNR: 26.64236543476973 - Bicubic PSNR: 24.87192185623686
-2023-05-22 05:05:56,515 [INFO] Model SSIM: 0.8721492620995275 - Bicubic SSIM: 0.8233347716777945
-2023-05-22 05:05:56,515 [INFO] Model LPIPS: 0.0003359891505022313 - Bicubic LPIPS: 0.0013645301913965267
+2023-05-22 06:16:50,945 [INFO] Model PSNR: 26.65966205330651 - Bicubic PSNR: 24.87192185623686
+2023-05-22 06:16:50,945 [INFO] Model SSIM: 0.8725496033554337 - Bicubic SSIM: 0.8233347716777945
+2023-05-22 06:16:50,945 [INFO] Model LPIPS: 0.00033572075771443706 - Bicubic LPIPS: 0.0013645301913965267
 ```
 
 With a batch size of 1 image, OpenVINO inference processes images from 960x540 -> 1920x1080 in 15.461 milliseconds per frame, which is faster than 60 FPS.  I was testing with Python so with a good C++ framework this would be faster.  Also it's using RGB input, so it's not quite representative of real-world performance where YUV 4:2:0 would be used and you'd expect faster speed and higher quality.
