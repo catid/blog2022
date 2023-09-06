@@ -90,3 +90,11 @@ paginate = 8
         identifier = "alignment"
         name = "Robust Image Alignment"
         url = "/posts/lk40years"
+      [[languages.en.menu.main]]
+        identifier = "tiny_sr"
+        name = "Learned Upsampling at 60 FPS"
+        url = "/posts/tiny_sr"
+      [[languages.en.menu.main]]
+        identifier = "pack10"
+        name = "Pack10: 16-bit Raw Video"
+        url = "/posts/pack10"
