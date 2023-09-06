@@ -38,7 +38,7 @@ Note the `Precomputed Jacobians of Template Image` is a series of images, calcul
 
 If we assume the central difference gradient is used, one term of the sum might be:
 ```
-    (TemplateImage(x,y) - OtherImage(x,y)) * x * (TemplateImage(x+1,y) - TemplateImage(x-1,y)) * 0.5
+  (Template(x,y) - WarpImage(x,y)) * x * (Template(x+1,y) - Template(x-1,y)) * 0.5
 ```
 
 The implications of this step are important to understand if you want to know where the algorithm (as stated) fails.
