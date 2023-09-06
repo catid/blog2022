@@ -39,6 +39,7 @@ Note the `Precomputed Jacobians of Template Image` is a series of images, calcul
 If we assume the central difference gradient is used, one term of the sum would be:
 ```
   (WarpImage(x,y) - Template(x,y)) * x * 0.5 * (Template(x+1,y) - Template(x-1,y))
+  = (Pixel Value Difference) * x * (Template Gradient)
 ```
 
 The implications of this step are important to understand if you want to know where the algorithm (as stated) fails.
