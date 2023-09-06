@@ -73,9 +73,9 @@ A side note: When sampling from warped images at these sparsely selected locatio
 
 ## Huge Improvement: Keyframes!
 
-Recall that there are several steps that need to be pre-computed for the Inverse Compositional algorithm.  Instead of calculating this for every new pair of frames, a simple optimization that saves about 25% of the runtime is to treat every other frame as the keyframe/template image.  And at the end, invert the resulting affine matrix for every other frame.
+Recall that there are several steps `(3)-(6)` that need to be pre-computed for the template image in the Inverse Compositional algorithm.  Instead of calculating this for every new frame, a simple optimization that saves about 25% of the runtime is to treat every other frame as the keyframe/template image.  So it instead alternates aligning forwards/backwards from a keyframe.  When aligning backwards, the only change to the algorithm is to invert the calculated transform using double precision math.  So this optimization is very easy to implement.
 
-This can also support optimizing for higher framerates by picking the keyframes to be farther apart and assuming the alignment will be sufficient.
+This can also support higher framerates by picking the keyframes to be farther apart and assuming the alignment will be sufficient.
 
 
 ## Huge Improvement: Better Initialization!
