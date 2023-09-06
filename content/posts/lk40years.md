@@ -22,9 +22,9 @@ The "Efficient Image Alignment with Outlier Rejection" paper presents a modifica
 
 Note that the family of Lucas-Kanade algorithms is making the assumption that the images are within about 1 pixel of correct alignment already.  What this means is that in order to align images that are farther apart, an image pyramid is used.
 
-An image pyramid is constructed by (Gaussian) downsampling the full-resolution images to be half the size, and then repeating that operation until they are very small.  For example it could stop when the images have a dimension smaller than 32 pixels to a side.  As an example, if the input image has a size of 512x512 pixels, then the image pyramid consists of 5 images: 512x512, 256x256, 128x128, 64x64, 32x32.
+An image pyramid is constructed by (Gaussian) downsampling the full-resolution images to be half the size, and then repeating that operation until they are very small.  For example it could stop when the images have a dimension smaller than 32 pixels to a side.  We have to stop at about 32x32 pixels since we stop having image edges useful for alignment beyond that point.  As an example, if the input image has a size of 512x512 pixels, then the image pyramid consists of 5 images: 512x512, 256x256, 128x128, 64x64, 32x32.
 
-So if the images have moved more than ~32 pixels, the algorithm is not guaranteed to produce a correct result!  This is a fundamental limitation that can be lifted by increasing the input framerate or combining it with other algorithms as discussed later.
+Since we cannot keep downsampling forever, if the images have moved more than ~32 pixels, this algorithm is not guaranteed to produce a correct result!  This is a fundamental limitation that can be lifted by increasing the input framerate or combining it with other algorithms as discussed later.
 
 The paper above describes an image alignment algorithm that runs fast, but ignores the effect of outliers such as objects that move between frames:
 
