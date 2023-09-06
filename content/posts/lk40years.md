@@ -36,6 +36,11 @@ The most important step of the original algorithm is (7): The sum of `Warped Ima
 
 Note the `Precomputed Jacobians of Template Image` is a series of images, calculated with variations on the theme of: `x` * `Gradient in X direction of Image at (x, y)`, `y` * `Gradient in X direction of Image at (x, y)`, and so on.  The details are not important for this discussion, but calculations like this are involved.
 
+If we assume the central difference gradient is used, one term of the sum might be:
+```
+    (TemplateImage(x,y) - OtherImage(x,y)) * x * (TemplateImage(x+1,y) - TemplateImage(x-1,y)) * 0.5
+```
+
 The implications of this step are important to understand if you want to know where the algorithm (as stated) fails.
 
 First there are implications for floating-point precision.  For 16-bit images, the warped image difference may be as large as -65536 or more commonly closer to 0.  Furthermore the gradient is defined as the difference between neighboring pixel values, which can also be as large as -65536 or usually near 0.  Finally the Jacobian x/y values range the size of the image, which let's say is about 1000 pixels.  So multiplying all three gives a value of 4294967296000.  It's well-known that adding together large and small floating-point values loses precision, which is exactly what can happen here!  Mitigating this effect has a noticeable impact on performance as will be discussed later.
