@@ -51,7 +51,7 @@ In "Efficient Image Alignment with Outlier Rejection" the authors improve the In
 
 ![Robust Inverse Compositional Algorithm](rica_algorithm.png)
 
-A mask has been added, so that some pixels no longer participate in the sum discussed in the previous section.  The pixels that have the largest image difference are masked out.  Since almost all outliers have large image differences this effectively removes these huge distracting terms from the sum.
+A mask has been added, so that some pixels no longer participate in the sum discussed in the previous section.  The pixels that have the largest image difference are masked out.  Since almost all outliers have large image differences this effectively removes these huge, problematic terms from the sum.
 
 This version of the algorithm also works on every image pixel, so it has some details about breaking up the image into tiles to make step `(8a)` less expensive, but I ended up not needing to implement this since my version selects a sparse subset of pixels already.  So, the one important improvement suggested by this paper is simply to not sum pixels that look like outliers.
 
