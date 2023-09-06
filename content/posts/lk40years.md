@@ -116,7 +116,7 @@ In ["Parameterizing Homographies (Baker & Kanade, 2006)"](https://www.ri.cmu.edu
 
 So, I decided to explore if this is also the case for similarity (2-point) or affine (3-point) image alignment.  I implemented both the direct form and the representation using corner points and found that the direct form is better.  My intuition for why this might be the case goes back to the math in the previous section.
 
-This is the function that describes how pixels are transformed by the image warp:
+This is the function that describes how pixels are transformed by the image warp (for the similarity transform):
 
 ```
         W_x = (1+A) * x     - B * y + TX
