@@ -86,3 +86,7 @@ paginate = 8
         identifier = "backstory"
         name = "Game Hacking Backstory"
         url = "/backstory"
+      [[languages.en.menu.main]]
+        identifier = "alignment"
+        name = "Robust Image Alignment"
+        url = "/posts/lk40years"
