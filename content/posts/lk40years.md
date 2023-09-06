@@ -60,9 +60,11 @@ This version of the algorithm also works on every image pixel, so it has some de
 
 As described above, the pixels with large image gradient dominate the sum.  What if we *only* summed pixels that have large image gradients and just ignored the rest?  This is the intuition that leads to a good sparse version of the algorithm.
 
-This is inspired by the DSO paper: ["Direct Sparse Odometry"(Engel, 2016)](https://github.com/JakobEngel/dso).  The authors use low-quality but numerous feature points.  In the DSO paper the feature points are selected to be those with the maximum image gradient for NxN tiles across the image and some neighbors in a fixed pattern.
+This is inspired by the DSO paper: ["Direct Sparse Odometry" (Engel, 2016)](https://github.com/JakobEngel/dso).  The authors use low-quality but numerous feature points.  In the DSO paper the feature points are selected to be those with the maximum image gradient for NxN tiles across the image and some neighbors in a fixed pattern.
 
 I found it sufficient to select about 1000 pixels across each template image in the pyramid that have the largest x or y gradient magnitude.  They are selected by picking a NxN tile size such that the number of selected points will be above 1000, and then for each tile selecting one pixel.
+
+This makes being robust to moving object outliers much cheaper: As there are only about 1000 pixels selected, identifying the top 20% of pixels with the largest image difference is fast with `std::nth_element()` sorting an array of `struct { float abs_image_delta; uint16_t x, y; }` and subtracting out any gradient sum terms from those locations.  This is the same as the mask step in the Robust Inverse Compositional Algorithm, but applied to a sparse set of pixels so it's simpler.
 
 Since the number of pixels selected for each layer of the image pyramid is the same, each layer takes about the same amount of time to process regardless of its resolution.  This also hugely improves the speed of the Inverse Compositional algorithm, while also making it trivial to reject outlier pixels.
 
@@ -82,7 +84,7 @@ Normally the algorithm is initialized with an identity matrix, meaning it starts
 
 Phase correlation is slow on full resolution but on a small image it can quickly provide an initial estimate of alignment between frames in x/y.  This complements the LK algorithm nicely, which as discussed earlier is limited to a maximum of about 32 pixels of displacement betwen frames depending on the number of pyramid layers used.
 
-This is inspired by the Google paper ["Handheld Multi-Frame Super-Resolution"( Wronski et al, 2021)](https://sites.google.com/view/handheld-super-res/) where the authors use exactly this hybrid combination.
+This is inspired by the Google paper ["Handheld Multi-Frame Super-Resolution" ( Wronski et al, 2021)](https://sites.google.com/view/handheld-super-res/) where the authors use exactly this hybrid combination.
 
 OpenCV cv::phaseCorrelate() is very fast, taking less than a millisecond to provide an x/y displacement estimate.  I also implemented my own version of this with Halide and it performed just as well as the OpenCV version, but it used more CPU resources.  It's possible a version based on FFTW would perform better than the OpenCV version but I haven't tested.
 
