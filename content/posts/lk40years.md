@@ -36,9 +36,9 @@ The most important step of the original algorithm is (7): The sum of `Warped Ima
 
 Note the `Precomputed Jacobians of Template Image` is a series of images, calculated with variations on the theme of: `x` * `Gradient in X direction of Image at (x, y)`, `y` * `Gradient in X direction of Image at (x, y)`, and so on.  The details are not important for this discussion, but calculations like this are involved.
 
-If we assume the central difference gradient is used, one term of the sum might be:
+If we assume the central difference gradient is used, one term of the sum would be:
 ```
-  (Template(x,y) - WarpImage(x,y)) * x * 0.5 * (Template(x+1,y) - Template(x-1,y))
+  (WarpImage(x,y) - Template(x,y)) * x * 0.5 * (Template(x+1,y) - Template(x-1,y))
 ```
 
 The implications of this step are important to understand if you want to know where the algorithm (as stated) fails.
