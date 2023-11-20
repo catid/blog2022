@@ -723,7 +723,7 @@ The basics of Ogg Opus are that you get "pages" that contain short audio clips c
 
 A silent clip is just three bytes regardless of sample rate etc: `bytes.fromhex('f8 ff fe')` so you don't need to spin up an Opus encoder to produce 20 milliseconds of silence.
 
-As soon as my parser above produces a Opus packet, we queue them up for delivery to the browser.  I removed the queueing details from the TTSServiceRunner so you see how it's grabbing the Opus clips from the background process, and either assigning a presentation timestamp (PTS) and display timestamp (DTS) to a silent packet or the dequeued packet.
+As soon as my parser above produces an Opus packet, we queue it up for delivery to the browser.  I removed the queuing details from the TTSServiceRunner so you see how it's grabbing the Opus clips from the background process, and either assigning a presentation timestamp (PTS) and display timestamp (DTS) to a silent packet or the dequeued packet:
 
 ```python
 # RTP timebase needs to be 48kHz: https://datatracker.ietf.org/doc/rfc7587/
@@ -771,7 +771,7 @@ class TTSServiceRunner:
         return self.generate_silence_packet(silence_duration), silence_duration
 ```
 
-The poll_packet() function is the one we showed earlier and finally completes the CustomAudioStream class implementation.
+The poll_packet() function is the one we showed earlier and finally completes the CustomAudioStream class implementation to deliver TTS audio to the browser.
 
 
 ## Discussion
@@ -779,6 +779,16 @@ The poll_packet() function is the one we showed earlier and finally completes th
 To recap, we've shown how to get as low latency as possible with the GPT-4-Vision, TTS, and Whisper 3 models right from Python in a way that's easy to hack on and use for one-off projects.
 
 I hope that others find the code useful and a good starting point for building their own projects based on OpenAI tools: https://github.com/catid/aiwebcam2
+
+Future work:
+
+* Add a cancel button so the AI does not talk over you.
+* Improve the HTML render frame and UI in general to be more usable with resizeable frames and copy buttons for generated code.
+* Have a button to switch between desktop apps and user's webcam.
+* Support for other browsers and iPhone.
+* Use Unreal engine to generate a real-time lip-synced avatar for the AI running on the server.
+* Listen to audio and decide when to respond more intelligently.
+* Integrate with a Zoom client to allow the AI to join teleconferences and reply.
 
 
 ## Multi-modal is awesome:
