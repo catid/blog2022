@@ -654,6 +654,8 @@ The TTS API supports HTTP streaming output in ~1 second chunks, which is sigific
 
 Unfortunately Python does not have good tools for working with Ogg Opus containers.  I had to write my own parser for this format, which is available here: https://github.com/catid/aiwebcam2/blob/main/service_tts.py
 
+Here's how to use the OpenAI TTS API and stream the audio chunks:
+
 ```python
 def streamed_audio(input_text, callback, voice='alloy', model='tts-1', speed=1.0):
     #t0 = time.time()
