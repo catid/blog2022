@@ -714,7 +714,7 @@ def streamed_audio(input_text, callback, voice='alloy', model='tts-1', speed=1.0
 
 Using large chunk sizes does not slow down the HTTP reads, so you might as well.  The HTTP chunks are about 4-8KB on average since Opus codec is a variable-length audio codec.  Some of the code above is harder to read because it's using my parser in the full repo, but basically as soon as Opus audio clips become available in the stream, they're loaded into PyAV Packets and shipped to the browser via WebRTC.  I'll discuss that in the next section.
 
-The problems I found with the OpenAI TTS endpoint for now is that the speed parameter needs to be 1.0 since the output sounds bad at faster speeds.  You might as well use lower quality and free TTS for fast-speaking audio, so OpenAI should probably fix this to remain competitive.
+The one problem that I found with the OpenAI TTS endpoint is that the speed parameter needs to be 1.0 since the output sounds bad at faster speeds.  You might as well use lower quality and free TTS for fast-speaking audio, so OpenAI should probably fix this to remain competitive.
 
 
 ## Streaming Ogg Opus via WebRTC
