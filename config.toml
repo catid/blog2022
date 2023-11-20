@@ -98,3 +98,7 @@ paginate = 8
         identifier = "pack10"
         name = "Pack10: 16-bit Raw Video"
         url = "/posts/pack10"
+      [[languages.en.menu.main]]
+        identifier = "aiwebcam"
+        name = "AI Webcam: WebRTC <3 OpenAI"
+        url = "/posts/aiwebcam"
