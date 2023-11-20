@@ -17,6 +17,8 @@ Here's an example of live multi-modal conversation with an AI: https://www.youtu
 
 The full code for the examples below is available here: https://github.com/catid/aiwebcam2
 
+This post is lovingly hand-crafted by a real human and may contain human flaws.
+
 
 ## Elements of an AI Conversation
 
@@ -344,7 +346,7 @@ Okay so now we have the ability to read audio/video from the user and to generat
 
 ## Best Quality Real-time Speech-to-Text
 
-After we have the PCM audio from the user's microphone, we can process it using the open-source Whisper 3 model.  Since OpenAI values user privacy they have open-sourced the Whisper ASR models so you can you do not need to share any audio from your microphone with OpenAI.  It's also faster to host this locally and reduces latency overall.  Whisper 3 is about twice as fast as Whisper 2 and can be made 25% faster using the BetterTransformers package as demonstrated below.  In the future OpenAI will distill a small version of the model that can shortcut the big model and will make it about 2x faster again, so it is already blazing fast and super-high quality.
+After we have the PCM audio from the user's microphone, we can process it using the open-source Whisper 3 model.  Since OpenAI values user privacy they have open-sourced the Whisper ASR models so that you do not need to share any audio from your microphone with OpenAI.  It's also faster to host this locally and reduces latency overall.  Whisper 3 is about twice as fast as Whisper 2 and can be made 25% faster using the BetterTransformers package as demonstrated below.  In the future OpenAI will distill a small version of the model that can shortcut the big model and will make it about 2x faster again, so it is already blazing fast and super-high quality.
 
 Since the ASR operation is pretty heavy and we don't want to block the main Python thread, we run the ASR processing in a background process and use multiprocessing.Queue objects to interact with the model.  The details are in the repo: https://github.com/catid/aiwebcam2/blob/main/service_asr.py
 
@@ -639,6 +641,8 @@ class TextParser:
         self.found_newline = False
 ```
 
+Now as soon as we can the AI will start producing speech to reduce latency further!
+
 
 ## Using OpenAI Text-to-Speech (TTS)
 
@@ -718,6 +722,10 @@ A silent clip is just three bytes regardless of sample rate etc: `bytes.fromhex(
 As soon as my parser above produces a Opus packet, we queue them up for delivery to the browser.  I removed the queueing details from the TTSServiceRunner so you see how it's grabbing the Opus clips from the background process, and either assigning a presentation timestamp (PTS) and display timestamp (DTS) to a silent packet or the dequeued packet.
 
 ```python
+# RTP timebase needs to be 48kHz: https://datatracker.ietf.org/doc/rfc7587/
+time_base = 48000
+time_base_fraction = fractions.Fraction(1, time_base)
+
 class TTSServiceRunner:
     def __init__(self):
         self.next_pts = 0
