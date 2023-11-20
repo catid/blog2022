@@ -17,6 +17,8 @@ Here's an example of live multi-modal conversation with an AI: https://www.youtu
 
 The full code for the examples below is available here: https://github.com/catid/aiwebcam2
 
+Note this code is in Python and plain HTML/Javascript so it's more useful for people without a learning curve, but the same ideas presented here work in all programming languages for production uses.
+
 This post is lovingly hand-crafted by a real human and may contain human flaws.
 
 
