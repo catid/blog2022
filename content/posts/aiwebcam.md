@@ -13,7 +13,7 @@ One of the promises of multi-modal AI like GPT-4-Vision is that you'll be able t
 
 Bringing all the modalities together is possible using a web browser communicating with a WebRTC backend, similar to a Zoom call.  The webpage can also host the other modalities supported by AI models such as text-to-image, text-to-text, and so on.  But to really deliver on the promise of real-time conversation, WebRTC is ready to go today: The latency between speaking and getting a response back is about the same as a normal conversation!
 
-Here's an example of live multi-modal conversation with an AI: https://www.youtube.com/watch?v=G_L8t3EQMcs
+Here's an example of live multi-modal conversation with an AI: https://www.youtube.com/watch?v=CLF_uNfBZyc
 
 The full code for the examples below is available here: https://github.com/catid/aiwebcam2
 
