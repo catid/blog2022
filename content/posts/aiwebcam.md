@@ -492,10 +492,14 @@ base64_image = base64.b64encode(buffer.read()).decode('utf-8')
 
 
 def convert_yuv420_to_ycbcr(data, w, h):
+    data1d = data.reshape(-1)
+
     # Extract Y, U, and V channels
-    Y = data[:h]
-    U = data[h:(h + h//4)].reshape((h // 2, w // 2))
-    V = data[(h + h//4):].reshape((h // 2, w // 2))
+    Y_end = w*h
+    Y = data1d[:Y_end].reshape(h, w)
+    U_end = Y_end + (w // 2) * (h // 2)
+    U = data1d[Y_end:U_end].reshape((h // 2, w // 2))
+    V = data1d[U_end:].reshape((h // 2, w // 2))
 
     # Upsample U and V channels
     U_upsampled = U.repeat(2, axis=0).repeat(2, axis=1)
