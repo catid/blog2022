@@ -720,6 +720,7 @@ Using large chunk sizes does not slow down the HTTP reads, so you might as well.
 
 The one problem that I found with the OpenAI TTS endpoint is that the speed parameter needs to be 1.0 since the output sounds bad at faster speeds.  You might as well use lower quality and free TTS for fast-speaking audio, so OpenAI should probably fix this to remain competitive.
 
+Another issue is that the TTS doesn't speak the time properly as "o'clock" so probably for now it's a good idea to include a patch in your GPT system prompt to emit the correct time?
 
 ## Streaming Ogg Opus via WebRTC
 
