@@ -15,7 +15,7 @@ I'm curious about the production of this show because it was canceled after the 
 
 Pantheon is very ambitious because it tells a relateable story about one of the most unrelateable ideas in science-fiction: The Singularity.  It borrows heavily from popular science fiction/fantasy series, which is partly why I felt the need to blog about the show.  This is an important show right now because some of these sci-fi tropes are starting to look like prophesies in the real world.
 
-Pantheon uses the animated medium extremely effectively, allowing it to tell a story that would never work as a live-action show.  Its dynamic ranges from comfortable home life, to the most extreme violence and body horror I've seen in an animated show.  It also tells a believable story about how the future might unfold over the next 120,000 years and somehow remains relateable.
+Pantheon uses the animated medium extremely effectively, allowing it to tell a story that would never work as a live-action show.  Its dynamic ranges from comfortable home life, to the most extreme violence and uncomfortable body horror I've seen in an animated series.  It also tells a believable story about how the future might unfold over the next 120,000 years and somehow remains relateable.
 
 I'd like to underscore that this show feels believable and well-researched.  Almost everything that happens in the show seemed plausible to me, so I was rarely taken out of the story by something that seemed too far-fetched.  All the scenes involving computers and the terminology used are full and complete rather than dumbing it down, and the technology used is true to the present day.
 
