@@ -64,17 +64,17 @@ The one fourth wall break at the end is fantastic: "Caspian: Set a course for th
 
 The idea that you can under-clock or over-clock in a simulation, an artificial intelligence that creates a virus to wipe out humanity, and the idea of a multiverse of simulated realities, are common tropes in more modern sci-fi about uploaded intelligences but I can't pinpoint a specific reference since these are so common.
 
-Julius Pope looks like Steve Ballmer (search YouTube for "Developers Developers Developers") from Microsoft.  Stephen Holstrom looks like Steve Jobs, the founder of Apple.  The Logorythms cube data center is a reference to The Borg from Star Trek.
+Julius Pope looks like Steve Ballmer (search YouTube for "Developers Developers Developers") from Microsoft.  Stephen Holstrom looks like Steve Jobs, the founder of Apple.  The Logorythms cube data center is a reference to The Borg from Star Trek.  Microsoft is often synonymous with "The Borg" in computer geek culture.
 
 The idea of "solving alignment" is a real thing but means something different in the OpenAI sense, while in real-life research this means aligning a Large Language Model with human values.  In Pantheon this has something to do with fixing a flaw in the way uploaded intelligences are executed by the computer.  I kind of wish they just used a new word for this instead of misusing a real term.
 
-There are some semblance of Christian theology in this show, with Caspian returning from the dead saving the world.  Caspian, Maddie and her father intersect her own past timeline as a God, somehow allowing her father to be a Godlike figure in her own life a bit like a holy trinity of some kind.
+There is some semblance of Christian theology in this show, with Caspian returning from the dead saving the world.  Caspian, Maddie and her father intersect her own past timeline as a God, somehow allowing her father to be a Godlike figure in her own life a bit like a holy trinity of some kind.
 
-Caspian is just a head at the end like Orpheus from Greek mythology, whose head was known for speaking the future.  His head intones the number of years until The Swarm returns to thank humanity.
+Caspian is just a head at the end like Orpheus from Greek mythology, whose head was known for speaking the future.  His head intones the number of years until The Swarm returns to thank their creator.
 
-The idea of people flying around in a virtual world feels like a Matrix reference.  There's also that time that Caspian is "downloaded" into a robot and wakes up like Neo in a vat.  There are some other casual Matrix references.
+The idea of people flying around in a virtual world feels like a Matrix reference.  There's also that time that Caspian is "downloaded" into a robot and wakes up like Neo in a vat.  There are some other casual Matrix references in the dialog such as "ignorance is bliss."
 
-The show references Serial Experiments Lain in a few ways.  This is a cult 90s anime series about a literal God on the Internet (back when the Internet was The New Thing), which is also challenging to understand and up to interpretation.  There are similar themes of a "technology-created God" that is able to modify memories and exists outside of time.  Lain has a similar hairstyle to Maddie in season one of Pantheon.
+The show references Serial Experiments Lain in a few ways.  This is a cult 90s anime series about a literal God on the Internet (back when the Internet was The New Thing), which is also challenging to understand and up to interpretation.  There are similar themes of a "technology-created God" that is able to modify memories and exists outside of time.  Lain has a similar hairstyle to Maddie in season one of Pantheon, which was one indication to me that season 2 was planned before the work on season 1 started.
 
 Ghost in the Shell is heavily referenced.  Pantheon borrows the Tachikoma "rice cooker" shape for MIST's robotic form.  Maddie, as an adult, looks like Motoko Kusanagi.  A hacking program (project 2501) that becomes sentient is echoed in The Safesurf Swarm.
 
@@ -94,6 +94,6 @@ Like pretty much all sci-fi I've seen and read aside from the Bobiverse, Pantheo
 
 ### What are the implications of eternal life?
 
-After explaining that they were together for a week: "We had 80 good years of marriage." -Waxman
+After explaining that they were together for a week in over-clock: "We had 80 good years of marriage." -Waxman
 
 "I was right about pain, by the way.  It may fade with time, but it's always there.  Easy to find." -Maddie
