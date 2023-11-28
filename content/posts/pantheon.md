@@ -17,7 +17,7 @@ Pantheon is very ambitious because it tells a relateable story about one of the 
 
 Pantheon uses the animated medium extremely effectively, allowing it to tell a story that would never work as a live-action show.  Its dynamic ranges from comfortable home life, to the most extreme violence and body horror I've seen in an animated show.  It also tells a believable story about how the future might unfold over the next 120,000 years and somehow remains relateable.
 
-I'd like to underscore that this show feels belieavable and well-researched.  Almost everything that happens in the show seemed plausible to me, so I was rarely taken out of the story by something that seemed too far-fetched.  All the scenes involving computers and the terminology used are full and complete rather than dumbing it down, and the technology used is true to the present day.
+I'd like to underscore that this show feels believable and well-researched.  Almost everything that happens in the show seemed plausible to me, so I was rarely taken out of the story by something that seemed too far-fetched.  All the scenes involving computers and the terminology used are full and complete rather than dumbing it down, and the technology used is true to the present day.
 
 The fight scenes in Pantheon are incredibly creative and often set in a virtual world, acting out God-like attacks as wild as the imagination, flinging black holes at eachother like the most insane fights in Dragon Ball Z.  It seemed like the animators were having a ton of fun with these extremely rapid-fire fight scenes and had more ideas than time to animate them all.  The victory often goes to the most creative fighter, not the strongest.
 
