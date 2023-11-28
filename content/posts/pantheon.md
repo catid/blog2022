@@ -66,7 +66,7 @@ The idea that you can under-clock or over-clock in a simulation, an artificial i
 
 Julius Pope looks like Steve Ballmer (search YouTube for "Developers Developers Developers") from Microsoft.  Stephen Holstrom looks like Steve Jobs, the founder of Apple.  The Logorythms cube data center is a reference to The Borg from Star Trek.  Microsoft is often synonymous with "The Borg" in computer geek culture.
 
-The idea of "solving alignment" is a real thing but means something different in the OpenAI sense, while in real-life research this means aligning a Large Language Model with human values.  In Pantheon this has something to do with fixing a flaw in the way uploaded intelligences are executed by the computer.  I kind of wish they just used a new word for this instead of misusing a real term.
+The idea of "solving alignment" is a real thing but means something different in the OpenAI sense, where in real-life research this means aligning a Large Language Model with human values.  In Pantheon this has something to do with fixing a flaw in the way uploaded intelligences are executed by the computer.  I kind of wish they just used a new word for this instead of misusing a real term.
 
 There is some semblance of Christian theology in this show, with Caspian returning from the dead saving the world.  Caspian, Maddie and her father intersect her own past timeline as a God, somehow allowing her father to be a Godlike figure in her own life a bit like a holy trinity of some kind.
 
