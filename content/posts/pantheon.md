@@ -97,3 +97,5 @@ Like pretty much all sci-fi I've seen and read aside from the Bobiverse, Pantheo
 After explaining that they were together for a week in over-clock: "We had 80 good years of marriage." -Waxman
 
 "I was right about pain, by the way.  It may fade with time, but it's always there.  Easy to find." -Maddie
+
+What makes eternal life possible?  Well apparently a pinch of love, and someone to share it with.  At least, it would be less lonely.
