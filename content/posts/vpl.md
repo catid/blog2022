@@ -44,6 +44,15 @@ sudo reboot now
 
 Now you can run `clinfo` to verify that the drivers are working.  At this point you should be able to use OpenVINO and other OpenCL acceleration.
 
+```bash
+catid@devnuc:~$ clinfo
+Number of platforms                               1
+  Platform Name                                   Intel(R) OpenCL Graphics
+  Platform Vendor                                 Intel(R) Corporation
+  Platform Version                                OpenCL 3.0
+...
+```
+
 
 ## Build latest Intel Media Driver software
 
