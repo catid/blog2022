@@ -39,7 +39,7 @@ find . -type f -name "*.mkv" -exec ffmpeg -i {} -c:v copy -c:a ac3 -ac 2 fixed_{
 This command runs really fast because it doesn't re-encode the video, it just copies the video stream and re-encodes the audio stream to AC3.  The `-ac 2` option downmixes the unsupported 5.1 audio channels to stereo, as otherwise it plays back without sound.
 
 
-### So what really happened?
+## So what really happened?
 
 The primary unresolved question you'll have at the end is: Why is Maddie the only one left?  Why does she become the God of the multiverse of human simulations?
 
@@ -85,14 +85,14 @@ Maddie's "NERD" sticker on her laptop is a reference to NERV from Neon Genesis E
 The robots that start terminating people at the end of season 2 are references to the Terminator movies.  The larger robots that throw old-mode Julius over the railing are based on the ED-209 from Robocop.  And his falling death parallels the Emperor's death in Star Wars: Return of the Jedi and is a fitting death for a truly evil character.
 
 
-### Problems with the Show
+## Problems with the Show
 
 The dumbest thing that happens is when Stephen Holstrom's brain is uploaded to a hard drive, plugged into a car, and then the car drives into a military base, and then somehow his intelligence is sent to a satellite, and then that satellite is able to hack into another satellite.  It felt like lazy writing, where the writers wanted to do *something* crazy cool looking but couldn't figure out how to make it believable.  It doesn't make sense because David's UI required a whole super-computer to run, which makes sense, while some random rental car just can't have enough compute power to simulate a human.  Personally I would have deleted this entire scene as it adds no depth to the show.
 
 Like pretty much all sci-fi I've seen and read aside from the Bobiverse, Pantheon shies away from the idea of creating copies of oneself.  For some reason this is super taboo in Western culture, perhaps due to our ideals of individuality and uniqueness.  For example, the Star Trek transporter could be used to create endless copies of crewmates, but it is never used in this way.  But I think this is an important area to explore in sci-fi.  In reality if someone was an uploaded intelligence or AGI who could copy themselves, they would do this endlessly.  And if they did it would completely change the plot of this show, so I consider this a critical flaw in the show.  The only reason this doesn't happen is because the writers don't want it to happen.
 
 
-### What are the implications of eternal life?
+## What are the implications of eternal life?
 
 After explaining that they were together for a week in over-clock: "We had 80 good years of marriage." -Waxman
 
