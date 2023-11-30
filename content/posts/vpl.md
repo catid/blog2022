@@ -153,7 +153,7 @@ cd onevpl-gpu
 mkdir build && cd build
 cmake ..
 make -j16
-make install
+sudo make install
 ```
 
 ```bash
