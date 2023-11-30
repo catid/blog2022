@@ -47,7 +47,7 @@ My theory is that The Swarm is the key to this mystery.  They were merged with C
 
 At the end, they want to thank Caspian, not Maddie, for their existence.
 
-In episode one, there is a critical scene where Caspian has dinner with his fake family and they discuss a "shared resource problem" involving 5 geniuses.  His solution was to have a third party, a waiter solve the resource sharing problem.  Caspian's solution may have inspired The Swarm at the end of the show to select Maddie as a single arbiter over the human simulations.
+In episode one, there is a critical scene where Caspian has dinner with his fake family and they discuss a "shared resource problem" involving 5 geniuses.  His solution was to have a third party, a waiter, solve the resource sharing problem.  Caspian's solution may have inspired The Swarm at the end of the show to select Maddie as a single arbiter over the human simulations.
 
 But Maddie's responsibility is lonely.  This is a visual pun: the Singularity has been reached.  Throughout this show there are many cases where characters feel left-behind and lonely as other characters die.  This is why she revisits her own story with Caspian at her side again and again in a perfect loop, losing her memories each time.  This perfect loop is the show that we have been watching.
 
@@ -63,6 +63,8 @@ The one fourth wall break at the end is fantastic: "Caspian: Set a course for th
 ## References to Popular Sci-Fi
 
 The idea that you can under-clock or over-clock in a simulation, an artificial intelligence that creates a virus to wipe out humanity, and the idea of a multiverse of simulated realities, are common tropes in more modern sci-fi about uploaded intelligences but I can't pinpoint a specific reference since these are so common.
+
+The idea of raising a clone to replace someone important and continue their work is explored in a number of sci-fi series.  I was first introduced to the idea through the story of Ari Emory in C. J. Cherryh's Cyteen, except in that book her predecessor's memories are implanted rather than imbued through the more "The Truman Show"-esque orchestrated life played out over 20 years of real time experienced by Caspian.  "Altered Carbon" and "Moon" also explore this idea.
 
 Julius Pope looks like Steve Ballmer (search YouTube for "Developers Developers Developers") from Microsoft.  Stephen Holstrom looks like Steve Jobs, the founder of Apple.  The Logorythms cube data center is a reference to The Borg from Star Trek.  Microsoft is often synonymous with "The Borg" in computer geek culture.
 
