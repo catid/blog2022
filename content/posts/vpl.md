@@ -88,6 +88,8 @@ ninja
 sudo ninja install
 ```
 
+Finally we build and install the driver itself:
+
 ```bash
 cd ~
 git clone https://github.com/intel/media-driver.git
