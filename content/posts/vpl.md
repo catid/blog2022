@@ -206,6 +206,13 @@ script/build
 sudo script/install
 ```
 
+Check what libraries were installed:
+
+```bash
+catid@devnuc:~/sources/libvpl$ ls /usr/local/lib/vpl
+libvpl_wayland.so
+```
+
 Then you can run `vpl-inspect` to verify that VPL API is working:
 
 ```bash
