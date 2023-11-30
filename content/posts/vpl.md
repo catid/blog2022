@@ -231,6 +231,37 @@ Implementation #0: mfxhw64
 Total number of implementations found = 1
 ```
 
+You can also use `system_analyzer` to check more details:
+
+```bash
+catid@devnuc:~$ system_analyzer
+------------------------------------
+Looking for GPU interfaces available to OS...
+FOUND: /dev/dri/renderD128
+GPU interfaces found: 1
+------------------------------------
+
+
+------------------------------------
+Available implementation details:
+
+Implementation #0: mfxhw64
+  Library path: /opt/intel/mediasdk/lib/libmfxhw64.so.1.35
+  AccelerationMode: MFX_ACCEL_MODE_VIA_VAAPI
+  ApiVersion: 1.35
+  Impl: MFX_IMPL_TYPE_HARDWARE
+  ImplName: mfxhw64
+  MediaAdapterType: MFX_MEDIA_UNKNOWN
+  VendorID: 0x8086
+  DeviceID: 0x46A6 
+  GPU name: unknown (arch=na codename=na)
+  PCI BDF: FFFFFFFF:FFFFFFFF:FFFFFFFF.FFFFFFFF
+  PCI RevisionID: 0xFFFF
+  DRMRenderNodeNum: 128
+DeviceName: mfxhw64
+------------------------------------
+```
+
 
 ## Test a hardware-accelerated decode using VPL
 
