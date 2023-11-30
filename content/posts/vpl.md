@@ -146,15 +146,24 @@ sudo make install
 
 ## Build latest VPL software
 
+Build and install the oneVPL backend:
+
 ```bash
+sudo apt install git-lfs
+git lfs install
+
 cd ~
 git clone https://github.com/oneapi-src/oneVPL-intel-gpu onevpl-gpu
 cd onevpl-gpu
-mkdir build && cd build
+git checkout intel-onevpl-23.3.4
+mkdir build
+cd build
 cmake ..
 make -j16
 sudo make install
 ```
+
+Build and install libvpl and examples:
 
 ```bash
 cd ~
