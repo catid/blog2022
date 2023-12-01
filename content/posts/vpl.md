@@ -10,9 +10,12 @@ If your goal is to encode or decode video on a modern Intel Linux computer, and 
 
 So yeah it's a little niche.  But sometimes it's the best way to do some heavy lifting to transcode video on a tiny PC.  Maybe if you have a cluster of Intel servers it's the best way to do transcode in the cloud, rather than depending on expensive GPU instances.
 
+
 ## Pre-requisites
 
 I'm going to explore getting this running on Ubuntu Server 23.10.  I have no monitor plugged in and X is not running, so my output may be slightly different from yours.
+
+I found someone's work packaging up oneVPL for NixOS here: https://github.com/MordragT/nixos/tree/master/pkgs/
 
 Check if you have an Intel GPU, which should show up as an Integrated Graphics Controller and a `/dev/dri/card0` device:
 
@@ -75,7 +78,7 @@ sudo make install
 Install the `libva` dependency from source:
 
 ```bash
-sudo apt install meson
+sudo apt install meson libxext-dev
 
 cd ~
 git clone https://github.com/intel/libva/
