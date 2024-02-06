@@ -114,6 +114,8 @@ Results from training using my CIFAR-10 scripts: https://github.com/catid/cifar1
 
 As you can see from the validation accuracy% results, the original unmodified network produces the best results as you would expect (A).
 
+The simple low-rank linear layers perform worse than this new layer type by far.
+
 Also as I expected (B), reducing the hidden_dim of the FFN is a far better way to reduce the number of parameters in the model than using low-rank approximations.  For one, it actually reduces the training/inference time.  The low-rank approximations do not reduce the speed as much (simple low-rank layer) or make it worse (Kronecker layer).
 
 The (G) modification reduces parameters (from 5812538 to 5606202 weights) by just 4%.  And it's really questionable if there is any difference from baseline performance here.  It could be 4% worse - I can't tell since the difference in results are in the noise.
