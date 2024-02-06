@@ -105,7 +105,9 @@ Results from training using my CIFAR-10 scripts: https://github.com/catid/cifar1
 (A) CIFAR-10 x-transformers baseline: 88.6%
 (B) Set FFN hidden_dim to be half size: 88.39%
 
-(C) Replace FFN-in+FFN-out with SKL(r=0.5): 87.32% 
+(C) Replace FFN-in+FFN-out with SKL*(r=0.5): 87.32% 
+
+Note: SKL = Stacked Kronecker-product Layer (the complicated new one)
 
 (D) Replace FFN-in with SKL(r=0.5): 88.29%
 (E) Replace FFN-in with simple low-rank(r=0.5): 87.83% 
