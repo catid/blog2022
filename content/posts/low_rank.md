@@ -89,7 +89,7 @@ As you can see, this implementation is parameterized by the number of weights in
 I modified the `x-transformers` library to use this new layer to replace different linear layers in the model, and tested it on CIFAR-10.  The results are below.
 
 
-## Results
+## CIFAR-10 Validation Accuracy% Results
 
 Results from training using my CIFAR-10 scripts: https://github.com/catid/cifar10deepspeed and running `./launch_local_train.sh --reset --arch x_transformers`
 
@@ -112,7 +112,7 @@ Results from training using my CIFAR-10 scripts: https://github.com/catid/cifar1
 (I) Replace all attention with SKL(r=0.5): 87.47% 
 ```
 
-As you can see from the results, the original unmodified network produces the best results as you would expect (A).
+As you can see from the validation accuracy% results, the original unmodified network produces the best results as you would expect (A).
 
 Also as I expected (B), reducing the hidden_dim of the FFN is a far better way to reduce the number of parameters in the model than using low-rank approximations.  For one, it actually reduces the training/inference time.  The low-rank approximations do not reduce the speed as much (simple low-rank layer) or make it worse (Kronecker layer).
 
