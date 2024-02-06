@@ -47,6 +47,14 @@ Today, I found a new idea that seemed promising at first, and indeed does better
 The main downside is that they slow down training and inference, though in theory they might be able to reduce the number of parameters in the model without hurting model accuracy.  Let's find out!  First, here's my implementation of the layer:
 
 ```python
+def round_up_sqrt(m):
+    sm = int(m ** 0.5 + 0.5)
+    while sm*sm > m:
+        sm -= 1
+    while sm*sm < m:
+        sm += 1
+    return sm
+
 # Stacked Kronecker-product Layers https://openreview.net/pdf?id=ZjGr1tMVbjw
 # Uses 2r*sqrt(nm) parameters instead of nm.
 # For for n=512 x m=2048, r must be 256 or less to make it worthwhile.
