@@ -119,4 +119,4 @@ The (G) modification reduces parameters (from 5812538 to 5606202 weights) by jus
 
 ## Conclusion
 
-So yet again, despite me wanting it to work, it doesn't.  I'll probably keep tilting at this windmill because it's a very compelling idea.  Like maybe it works on much larger models I haven't tried training yet.
+So yet again, despite me wanting it to work, it doesn't.  I'll probably keep tilting at this windmill because it's a very compelling idea.  Like maybe it works on much larger models I haven't tried training yet.  Hope springs eternal.
