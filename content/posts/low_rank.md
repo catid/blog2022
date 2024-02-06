@@ -37,6 +37,8 @@ class RankReductionLayer(nn.Module):
         return self.up(self.down(x))
 ```
 
+To be clear this is a drop-in replacement for a `nn.Linear` layer that is designed to cut the number of parameters in half.
+
 
 ## A New Contender
 
