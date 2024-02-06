@@ -30,8 +30,8 @@ class RankReductionLayer(nn.Module):
         super(RankReductionLayer, self).__init__()
         rank = int(r * d_in * d_out / (d_in + d_out))
 
-        self.down = nn.Linear(input_dim, rank)
-        self.up = nn.Linear(rank, input_dim)
+        self.down = nn.Linear(d_in, rank)
+        self.up = nn.Linear(rank, d_out)
     
     def forward(self, x):
         return self.up(self.down(x))
