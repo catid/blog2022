@@ -134,3 +134,50 @@ The (G) modification reduces parameters (from 5812538 to 5606202 weights) by jus
 ## Conclusion
 
 So yet again, despite me wanting it to work, it doesn't.  I'll probably keep tilting at this windmill because it's a very compelling idea.  Like maybe it works on much larger models I haven't tried training yet.  Hope springs eternal.
+
+
+## Follow-up: DYAD
+
+Euclaise suggested trying DYAD ( https://arxiv.org/pdf/2312.06881.pdf ) to see how it performs during pre-training.
+
+I replaced the FeedForward linear layers in ViT-tiny with DYAD, and trained on CIFAR-10.  This is a different model than the x-transformers model I used above.
+
+Hyperparameters:
+
+```
+* ViT-tiny Patch Size = 4x4
+* ViT-tiny dim=512
+* ViT-tiny depth=4
+* ViT-tiny heads=6
+* ViT-tiny mlp_dim=256
+* Microbatch size per GPU = 256 (2x 4090 GPUs)
+* Gradient accumulation steps = 2
+* FP16 training
+* Optimizer = AdamW
+* Learning rate = 9.18e-4
+* Weight decay = 1.5e-5
+* Max epochs = 300
+* Warmup epochs = 5
+* Scheduler = CosineAnnealingWarmRestarts
+* Code here: https://github.com/catid/cifar10deepspeed
+```
+
+Baseline results:
+
+```
+Parameters: 4363254
+Validation accuracy: 85.46%, 84.96%, 85.76%, 85.48%
+```
+
+Results from increasing mlp_dim=1024, and replacing FFN linear layers with DYAD (which has 4x fewer parameters):
+
+```
+Parameters: 4366326
+Validation accuracy: 85.14%, 84.67%, 84.69%, 84.88%
+```
+
+Summary: DYAD performs about 1% worse for the same number of parameters.  This is about the same as the SKL results above.  Note that DYAD also reduces training speed by about 23%.
+
+So why do these low-rank approximations perform worse for the same number of parameters?  They are like the full linear layers, but they have fewer connections between the parameters.  There's something about pruning connections between parameters before training starts that doesn't work.
+
+My theory is that by having fewer connections, there are more gradient bottlenecks in the network.  This points at a way to speed up training as well: What if we start with more connections in the network and over time prune them?  What if we start with a wide network with lots of connections, and end up with a deeper, but narrower network?  This seems like a better way to do pre-training.
